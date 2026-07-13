@@ -1,236 +1,419 @@
--- SQL Dump
--- Database: portalsespim
--- Target Server Type: MariaDB
--- Target Server Version: 10.4.32
--- Server Charset: UTF-8 Unicode (utf8mb4)
--- Client Connection Collation: utf8mb4_unicode_ci
+-- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for osx10.10 (x86_64)
+--
+-- Host: localhost    Database: portalsespim
+-- ------------------------------------------------------
+-- Server version	10.4.28-MariaDB
 
-SET FOREIGN_KEY_CHECKS = 0;
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- --------------------------------------------------------
--- DATABASE INITIALIZATION
--- --------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS `portalsespim` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `portalsespim`;
+--
+-- Table structure for table `beranda_content`
+--
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `users`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(150) NOT NULL,
-  `nrp_nip` VARCHAR(50) NOT NULL,
-  `phone` VARCHAR(20) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `role` ENUM('super_admin', 'stakeholder', 'admin', 'serdik', 'widyaiswara') NOT NULL,
-  `role_label` VARCHAR(100) NOT NULL,
-  `keahlian` VARCHAR(255) DEFAULT NULL,
-  `sertifikasi` VARCHAR(255) DEFAULT NULL,
-  `program` VARCHAR(100) DEFAULT NULL,
-  `angkatan` VARCHAR(100) DEFAULT NULL,
-  `pangkat` VARCHAR(100) DEFAULT NULL,
-  `gelar` VARCHAR(100) DEFAULT NULL,
-  `foto` LONGTEXT DEFAULT NULL,
-  `email` VARCHAR(150) DEFAULT NULL,
-  `no_serdik` VARCHAR(50) DEFAULT NULL,
-  `instansi_polri` VARCHAR(150) DEFAULT NULL,
-  `kementerian_lembaga` VARCHAR(150) DEFAULT NULL,
-  `negara_asal` VARCHAR(100) DEFAULT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nrp_nip_unique` (`nrp_nip`),
-  UNIQUE KEY `phone_unique` (`phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
--- TABLE STRUCTURE: `beranda_content`
--- --------------------------------------------------------
 DROP TABLE IF EXISTS `beranda_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `beranda_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `profil_content`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `profil_content`;
-CREATE TABLE `profil_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Dumping data for table `beranda_content`
+--
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `program_pendidikan_content`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `program_pendidikan_content`;
-CREATE TABLE `program_pendidikan_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+LOCK TABLES `beranda_content` WRITE;
+/*!40000 ALTER TABLE `beranda_content` DISABLE KEYS */;
+INSERT INTO `beranda_content` VALUES ('h-1','Wajah utama Portal Resmi Sespim Lemdiklat Polri','Hero Headline','2026-06-30','Published','Admin','2026-07-08 07:59:27','2026-07-10 13:26:55','',''),('h-2','Kepala Sekolah Staf dan Pimpinan Polri','','2026-06-29','Published','Admin','2026-07-08 07:59:27','2026-07-11 14:30:02','/images/kasespim.png','Assalamu\'alaikum warahmatullahi wabarakatuh,\nSalam sejahtera bagi kita semua,\nOm Swastiastu, Namo Buddhaya, Salam Kebajikan.\n\nPuji syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa atas rahmat dan karunia-Nya, sehingga Portal Resmi Sekolah Staf dan Pimpinan Kepolisian Negara Republik Indonesia dapat hadir sebagai media informasi, komunikasi, dan publikasi yang mendukung pelaksanaan pendidikan kepemimpinan di lingkungan Polri. Kehadiran portal ini menjadi bagian dari upaya Sespim Polri dalam memperkuat keterbukaan informasi, meningkatkan layanan digital, serta mendukung tata kelola pendidikan yang modern, efektif, dan responsif.\n\nSespim Polri memiliki peran strategis dalam menyiapkan kader pemimpin Polri yang profesional, berintegritas, adaptif, serta mampu menjawab tantangan tugas kepolisian yang semakin kompleks. Melalui pendidikan, pelatihan, pengkajian, dan pengembangan kepemimpinan, Sespim Polri berkomitmen membentuk sumber daya manusia yang unggul, visioner, serta memiliki kemampuan manajerial dan kepemimpinan yang kuat dalam mendukung transformasi Polri yang Presisi.\n\nPortal ini diharapkan menjadi pusat informasi resmi yang mencakup profil lembaga, program pendidikan, kegiatan akademik, agenda kelembagaan, publikasi, serta layanan peserta didik. Selain itu, portal ini juga diharapkan memberikan manfaat bagi peserta didik, tenaga pendidik, pengasuh, personel Sespim Polri, alumni, mitra kerja, dan masyarakat luas, serta menjadi ruang komunikasi yang terbuka, informatif, dan konstruktif dalam mendukung peningkatan kualitas pendidikan kepemimpinan Polri.\n\nWassalamu\'alaikum warahmatullahi wabarakatuh.\n\nKepala Sekolah Staf dan Pimpinan Polri\nIrjen Pol. Midi Siswoko, S.I.K'),('h-3','Test Judul','Test Kategori','2026-07-11','Published','Denny Chahyo wiebowo','2026-07-11 17:02:53','2026-07-11 17:02:53','/images/test.png','Ini adalah isi konten testing.'),('h-4','Uji Coba Gambar Multer','Headline','2026-07-13','Published','Admin','2026-07-13 10:42:44','2026-07-13 10:42:44','/uploads/image-1783939364739-215553559.png',NULL);
+/*!40000 ALTER TABLE `beranda_content` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `kelembagaan_internal_content`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `kelembagaan_internal_content`;
-CREATE TABLE `kelembagaan_internal_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Table structure for table `berita_informasi_content`
+--
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `widyaiswara_content`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `widyaiswara_content`;
-CREATE TABLE `widyaiswara_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
--- TABLE STRUCTURE: `publikasi_content`
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `publikasi_content`;
-CREATE TABLE `publikasi_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
--- TABLE STRUCTURE: `berita_informasi_content`
--- --------------------------------------------------------
 DROP TABLE IF EXISTS `berita_informasi_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `berita_informasi_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `galeri_unduhan_content`
--- --------------------------------------------------------
+--
+-- Dumping data for table `berita_informasi_content`
+--
+
+LOCK TABLES `berita_informasi_content` WRITE;
+/*!40000 ALTER TABLE `berita_informasi_content` DISABLE KEYS */;
+INSERT INTO `berita_informasi_content` VALUES ('n-1','Kunjungan Kapolri ke Kampus Lembang','Berita Internal Sespim','2026-07-05','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kegiatan kunjungan kerja Kapolri dalam rangka meninjau kesiapan sarana prasarana pendidikan dan fasilitas belajar mengajar di Lembang. Kapolri menekankan pentingnya kurikulum yang adaptif terhadap transformasi digital guna menghasilkan perwira yang tangguh.'),('n-2','Feed Up To Date Pendidikan Dikreg-35','Feed Up To Date','2026-07-05','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Pantauan berita terkini mengenai pelaksanaan pendidikan Dikreg-35 Sespim. Seluruh peserta didik mengikuti tahapan perkuliahan, diskusi kelompok, dan latihan kepemimpinan secara intensif untuk mengasah kemampuan manajerial tingkat tinggi.'),('n-3','Portal Berita Nasional Pilihan','Portal Berita Nasional','2026-07-06','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Daftar rujukan portal berita nasional pilihan yang dikurasi oleh redaksi Humas Sespim. Rujukan ini mempermudah perwira siswa untuk memantau perkembangan situasi keamanan, ketertiban masyarakat, serta kebijakan nasional terbaru.'),('n-4','Media Sosial & Hashtag Sespim','Media Sosial & Hashtag','2026-07-06','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Informasi hashtag resmi dan akun media sosial Sespim Lemdiklat Polri. Media sosial dimanfaatkan sebagai wadah publikasi kegiatan akademik, informasi kemasyarakatan, serta interaksi konstruktif dengan publik.'),('n-5','Kalender Agenda Pendidikan','Agenda Pendidikan','2026-07-07','Draft','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kalender akademik lengkap dan rincian jadwal kegiatan belajar mengajar peserta didik Sespimti, Sespimmen, dan Sespimma untuk Tahun Ajaran 2026 guna mendukung perencanaan studi yang sistematis.'),('n-6','Informasi Publik Berkala Sespim','Informasi Publik','2026-07-07','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Laporan transparansi informasi publik Sespim Lemdiklat Polri secara berkala. Ini merupakan komitmen lembaga pendidikan dalam mendukung keterbukaan informasi publik dan tata kelola organisasi yang akuntabel.'),('n-7','Test Title with Summary','Kegiatan','2026-07-10','Published','Test Author','2026-07-10 03:55:04','2026-07-11 16:58:09',NULL,'Uji coba penginputan konten berita dengan deskripsi lengkap untuk memverifikasi fungsionalitas rendering teks di front-end Next.js serta integrasi form dinamis pada panel administrator.');
+/*!40000 ALTER TABLE `berita_informasi_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `galeri_unduhan_content`
+--
+
 DROP TABLE IF EXISTS `galeri_unduhan_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `galeri_unduhan_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `kontak_content`
--- --------------------------------------------------------
+--
+-- Dumping data for table `galeri_unduhan_content`
+--
+
+LOCK TABLES `galeri_unduhan_content` WRITE;
+/*!40000 ALTER TABLE `galeri_unduhan_content` DISABLE KEYS */;
+INSERT INTO `galeri_unduhan_content` VALUES ('g-1','Dokumentasi Upacara Pembukaan Pendidikan','Galeri Foto','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Dokumentasi foto dan siaran pers resmi pelaksanaan upacara pembukaan pendidikan perwira siswa Sespimti, Sespimmen, dan Sespimma Tahun Ajaran 2026.'),('g-2','Video Profil Sespim Lemdiklat Polri','Galeri Video','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Tautan pemutaran dan deskripsi video profil resmi Sespim Lemdiklat Polri yang memvisualisasikan visi misi, sarana pembelajaran, serta kegiatan latihan lapangan.'),('g-3','Template NASKAP Serdik Resmi','Template NASKAP','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Berkas template Microsoft Word resmi untuk penulisan Naskah Karya Perorangan (Naskap) agar format pengetikan serdik seragam dan sesuai standar.'),('g-4','Template Policy Brief Lemdiklat','Template Policy Brief','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Berkas template Microsoft Word penulisan Policy Brief resmi sesuai dengan tata cara penulisan kajian yang ditetapkan Lemdiklat Polri.'),('g-5','Formulir Pendaftaran Ulang / Umum','Formulir Umum','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Formulir pendaftaran ulang digital dan kelengkapan berkas administrasi bagi perwira siswa baru yang dinyatakan lulus seleksi masuk pendidikan.');
+/*!40000 ALTER TABLE `galeri_unduhan_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inpassing_claims`
+--
+
+DROP TABLE IF EXISTS `inpassing_claims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inpassing_claims` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nrp_nip` varchar(50) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `certificate_code` varchar(100) NOT NULL,
+  `completed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `certificate_code` (`certificate_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inpassing_claims`
+--
+
+LOCK TABLES `inpassing_claims` WRITE;
+/*!40000 ALTER TABLE `inpassing_claims` DISABLE KEYS */;
+INSERT INTO `inpassing_claims` VALUES (1,'84081234','AKBP Deny Haryanto, S.I.K., M.Si.','CERT-INP-84081234-7749','2026-07-11 19:21:11'),(2,'72050998','KOMPOL Budi Santoso, S.H.','CERT-INP-72050998-1123','2026-07-11 19:21:11'),(3,'76110822','AKBP Rina Herawati, M.Si.','CERT-INP-76110822-4982','2026-07-11 19:21:11'),(4,'69060168','Drs. Jawari','CERT-INP-69060168-5388','2026-07-11 19:41:03'),(5,'70100287','Abiyoso','CERT-INP-70100287-9424','2026-07-13 03:15:30');
+/*!40000 ALTER TABLE `inpassing_claims` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `kelembagaan_internal_content`
+--
+
+DROP TABLE IF EXISTS `kelembagaan_internal_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kelembagaan_internal_content` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kelembagaan_internal_content`
+--
+
+LOCK TABLES `kelembagaan_internal_content` WRITE;
+/*!40000 ALTER TABLE `kelembagaan_internal_content` DISABLE KEYS */;
+INSERT INTO `kelembagaan_internal_content` VALUES ('k-1','Tugas Pokok Bidang SETLEM','SETLEM','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Tugas pokok, fungsi, susunan staf, dan tata kerja Sekretariat Lembaga (Setlem) Sespim dalam menyelenggarakan perencanaan logistik, administrasi umum, dan sarana prasarana.'),('k-2','Tugas Pokok Bidang JIANBANG','JIANBANG','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Tugas pokok, fungsi, dan wewenang Bidang Pengkajian dan Pengembangan (Jianbang) Sespim dalam melakukan riset strategis dan pengembangan mutu diklat.'),('k-3','IKAS Alumni / Tracer Study','IKAS Alumni','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kanal komunikasi, database tracer study, dan jejaring koordinasi Ikatan Alumni Sespim (IKAS) dalam mendukung kolaborasi pimpinan kepolisian.'),('k-4','Tugas Pokok Bidang BIDANG','BIDANG','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Tugas pokok, fungsi, dan susunan personalia bidang operasional pendidikan dan pengajaran (Bidang Diklat) dalam mengawasi perwira siswa sehari-hari.');
+/*!40000 ALTER TABLE `kelembagaan_internal_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `kontak_content`
+--
+
 DROP TABLE IF EXISTS `kontak_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kontak_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
--- TABLE STRUCTURE: `sarana_prasarana_content`
--- --------------------------------------------------------
+--
+-- Dumping data for table `kontak_content`
+--
+
+LOCK TABLES `kontak_content` WRITE;
+/*!40000 ALTER TABLE `kontak_content` DISABLE KEYS */;
+INSERT INTO `kontak_content` VALUES ('con-1','Alamat Resmi Kampus Maribaya Lembang','Alamat resmi','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('con-2','Tautan Google Maps Kampus Lembang','Peta lokasi','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('con-3','Sosial Media & Form Kontak','Form kontak','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL);
+/*!40000 ALTER TABLE `kontak_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profil_content`
+--
+
+DROP TABLE IF EXISTS `profil_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profil_content` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profil_content`
+--
+
+LOCK TABLES `profil_content` WRITE;
+/*!40000 ALTER TABLE `profil_content` DISABLE KEYS */;
+INSERT INTO `profil_content` VALUES ('p-1','Sejarah Sespim Lemdiklat Polri','Sejarah Sespim','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:02:30','/images/sespim-campus-hero.png','Sejarah Sespim berawal pada tanggal 24 September 1964. Sespim Lemdiklat Polri sebagai lembaga pendidikan kepemimpinan dan manajemen berdiri dan diresmikan oleh Presiden Republik Indonesia Ir. Soekarno di Istana Bogor pada tanggal 19 Maret 1965. Angkatan pertama dibuka dengan sebutan Sekolah Staf dan Komando Angkatan Kepolisian (SESKOAK).\n\nDalam perjalanannya, Sespim Polri mengalami beberapa perubahan nomenklatur dan kedudukan organisasi sesuai perkembangan kelembagaan Polri. Perubahan tersebut meliputi:\n- 1 Juli 1969: SESKOAK menjadi Sekolah Staf dan Komando Angkatan Kepolisian (SESKOPOL).\n- Tahun 1974: SESKOPOL berubah menjadi Sesko ABRI Bagian Kepolisian.\n- 30 Oktober 1984: Sesko ABRI Bagian Kepolisian berubah menjadi Sespim Polri.\n- 25 Mei 2001: Sespim Polri berada di bawah Dediklat Kapolri.\n- 17 Oktober 2002: Sespim Polri kembali langsung berada di bawah Kapolri.\n- 14 September 2010: seluruh lembaga pendidikan Polri berada di bawah Lemdikpol.\n\nSelanjutnya nomenklatur Lemdikpol berubah menjadi Lembaga Pendidikan dan Latihan Polri yang disingkat Lemdiklat Polri, berdasarkan Peraturan Presiden Republik Indonesia Nomor 5 Tahun 2017. Sespim Polri juga mengembangkan kerja sama dengan menerima peserta dari instansi lain seperti TNI Angkatan Darat, Angkatan Laut, Angkatan Udara, unsur Criminal Justice System, serta peserta didik dari mancanegara (berjumlah 113 orang dari 14 negara).'),('p-2','Visi dan Misi Sespim Lemdiklat Polri','Visi Misi','2026-06-30','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:02:48','','VISI SESPIM LEMDIKLAT POLRI\nMenjadi lembaga pendidikan pengembangan tinggi Polri yang berkualitas dalam mendidik calon pimpinan Polri yang memiliki profesionalisme, wawasan kepemimpinan strategi, dan komitmen kuat terhadap integritas moral sebagai pelindung, pengayom, dan pelayan masyarakat.\n\nMISI SESPIM LEMDIKLAT POLRI\n1. Menyelenggarakan pendidikan calon pemimpin untuk tingkat pertama, tingkat menengah, dan tingkat tinggi Polri serta penegak hukum lainnya.\n2. Menyelenggarakan pengkajian dan pengembangan kebijakan serta strategi kepolisian, peradilan pidana, keamanan, dan ketertiban masyarakat.\n3. Menyelenggarakan pelayanan informasi hasil pengkajian dan pengembangan, konsultasi manajemen kepolisian, keamanan, dan ketertiban masyarakat.\n4. Menyelenggarakan pendidikan lainnya di bidang manajemen keamanan dan ketertiban masyarakat.'),('p-3','Tugas dan Fungsi Sespim Lemdiklat Polri','Tugas Fungsi','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-10 14:29:31','','TUGAS POKOK SESPIM POLRI\nSespim Polri bertugas menyelenggarakan pendidikan manajemen tingkat tinggi, tingkat menengah, dan tingkat pertama; pengkajian dan pengembangan kebijakan; serta mengelola komponen pendidikan di lingkungan Polri.\n- Pendidikan manajemen tingkat tinggi.\n- Pendidikan manajemen tingkat menengah.\n- Pendidikan manajemen tingkat pertama.\n- Pengkajian dan pengembangan kebijakan.\n- Pengelolaan komponen pendidikan di lingkungan Polri.\n\nFUNGSI PENDIDIKAN DAN PELATIHAN\nDalam menjalankan tugasnya, Sespim Polri menyelenggarakan pendidikan dan pelatihan staf serta kepemimpinan tingkat tinggi, tingkat menengah, dan tingkat pertama bagi perwira Polri maupun penegak hukum lainnya.\n- Pendidikan dan pelatihan staf tingkat tinggi.\n- Pendidikan dan pelatihan kepemimpinan tingkat menengah.\n- Pendidikan dan pelatihan kepemimpinan tingkat pertama.\n- Peserta berasal dari perwira Polri maupun penegak hukum lainnya.\n\nFUNGSI MANAJEMEN DAN PEMBINAAN KOMPONEN\nSespim Polri menyelenggarakan pendidikan dan pelatihan manajemen bagi perwira Polri maupun non-Polri, serta melaksanakan pembinaan sumber daya manusia, logistik, dan keuangan di lingkungan Sespim Polri.\n- Pendidikan dan pelatihan manajemen bagi perwira Polri.\n- Pendidikan dan pelatihan manajemen bagi peserta non-Polri.\n- Pembinaan sumber daya manusia.\n- Pembinaan logistik dan keuangan di lingkungan Sespim Polri.\n\nFUNGSI PENGKAJIAN DAN PENGEMBANGAN\nSespim Polri melaksanakan pengkajian dan pengembangan manajemen, kebijakan, serta lingkungan strategis di jajaran Polri sebagai dukungan terhadap peningkatan kualitas organisasi dan pendidikan kepemimpinan.\n- Pengkajian manajemen di jajaran Polri.\n- Pengembangan kebijakan organisasi.\n- Analisis lingkungan strategis.\n- Dukungan kajian bagi peningkatan kualitas pendidikan dan manajemen Polri.'),('p-4','Struktur Organisasi Sespim Lemdiklat Polri','Struktur Organisasi','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-10 14:36:36','/images/struktur-sespim.png','Bagan resmi struktur organisasi pelaksana di lingkungan Sespim Lemdiklat Polri. Bagan ini menggambarkan pembagian tata kerja, wewenang, dan tanggung jawab penanggung jawab unit kepolisian.'),('p-5','Daftar Pejabat Utama Sespim Lemdiklat Polri','Pejabat Sespim','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-11 03:33:05','','KELOMPOK: UNSUR PIMPINAN\nNama: Irjen Pol Prof. Dr. Eko Budi Sampurno, M.Si.\nPangkat: Irjen Pol\nJabatan: Kasespim\nFoto: /images/kasespim.png\n\nKELOMPOK: SETLEM\nNama: Brigjen Pol Drs. Solihin, S.H.\nPangkat: Brigjen Pol\nJabatan: Seslem\nFoto: \n\nNama: AKBP H. Wahyudi, S.E.\nPangkat: AKBP\nJabatan: Kasubbag Ren\nFoto: \n\nNama: Kompol Suhardi\nPangkat: Kompol\nJabatan: Kasubbag Log\nFoto: \n\nNama: Kompol Bambang S.\nPangkat: Kompol\nJabatan: Kasubbag Um\nFoto: \n\nKELOMPOK: JIANBANG\nNama: Kombes Pol Drs. Anwar, M.Si.\nPangkat: Kombes Pol\nJabatan: Kabag Jianbang\nFoto: \n\nNama: AKBP Supriyadi, S.H.\nPangkat: AKBP\nJabatan: Kasubbag SLS\nFoto: \n\nNama: AKBP H. Mulyana, S.H.\nPangkat: AKBP\nJabatan: Kasubbag Analis\nFoto: \n\nNama: AKBP Drs. H. Dedi\nPangkat: AKBP\nJabatan: Kasubbag SMK\nFoto: \n\nNama: AKBP H. Sukarna, M.Si.\nPangkat: AKBP\nJabatan: Kasubbag SKK\nFoto: \n\nNama: Kombes Pol Drs. H. Subroto\nPangkat: Kombes Pol\nJabatan: Analis Utama Bagjianbang\nFoto: \n\nNama: Kombes Pol Drs. H. Mulyono\nPangkat: Kombes Pol\nJabatan: Analis Utama Bagjianbang\nFoto: \n\nKELOMPOK: BIDANG STRATEGI\nNama: Kombes Pol Budi Utomo, S.I.K.\nPangkat: Kombes Pol\nJabatan: Kabid Strategi\nFoto: \n\nNama: AKBP H. Jajat\nPangkat: AKBP\nJabatan: Kasubbid Sespimti Bidstrategi\nFoto: \n\nKELOMPOK: BIDANG MANAJEMEN\nNama: Kombes Pol Dra. Rina Sari\nPangkat: Kombes Pol\nJabatan: Kabid Jemen Sespim\nFoto: \n\nNama: AKBP H. Dedy\nPangkat: AKBP\nJabatan: Kasubbid Sespimti Bidjemen\nFoto: \n\nNama: AKBP H. Santoso\nPangkat: AKBP\nJabatan: Kasubbid Sespimmen Bidjemen\nFoto: \n\nNama: AKBP H. Hermawan\nPangkat: AKBP\nJabatan: Kasubbid Sespimma Bidjemen\nFoto: \n\nKELOMPOK: BIDANG HUKUM & PERUNDANG-UNDANGAN (KUMDANG)\nNama: Kombes Pol Drs. H. Sukarno\nPangkat: Kombes Pol\nJabatan: Kabid Kumdang\nFoto: \n\nNama: AKBP H. Mulyana, S.H.\nPangkat: AKBP\nJabatan: Kasubbid Sespimti Bidkumdang\nFoto: \n\nNama: AKBP H. Achmad\nPangkat: AKBP\nJabatan: Kasubbid Sespimmen Bidkumdang\nFoto: \n\nNama: AKBP H. Syarif\nPangkat: AKBP\nJabatan: Kasubbid Sespimma Bidkumdang\nFoto: \n\nKELOMPOK: BIDANG PENGETAHUAN SOCIAL (PENGSOS)\nNama: Kombes Pol Dra. H. Patrige\nPangkat: Kombes Pol\nJabatan: Kabid Pengsos\nFoto: \n\nNama: AKBP H. Supriyadi, S.H.\nPangkat: AKBP\nJabatan: Kasubbid Sespimti Bidpengsos\nFoto: \n\nNama: AKBP H. Wahyudi, S.E.\nPangkat: AKBP\nJabatan: Kasubbid Sespimmen Bidpengsos\nFoto: \n\nNama: AKBP H. Suhardi\nPangkat: AKBP\nJabatan: Kasubbid Sespimma Bidpengsos\nFoto: \n\nKELOMPOK: BIDANG PROFESI DAN TEKNOLOGI (PROFTEK)\nNama: Kombes Pol Drs. Anwar, M.Si.\nPangkat: Kombes Pol\nJabatan: Kabid Proftek\nFoto: \n\nNama: AKBP H. Patrige\nPangkat: AKBP\nJabatan: Kasubbid Sespimti BidProftek\nFoto: \n\nNama: AKBP H. Solihin\nPangkat: AKBP\nJabatan: Kasubbid Sespimmen BidProftek\nFoto: \n\nNama: AKBP H. Romli\nPangkat: AKBP\nJabatan: Kasubbid Sespimma BidProftek\nFoto: \n\nKELOMPOK: BIDANG PEMBINAAN TENAGA PENDIDIK (BIDBINGADIK)\nNama: Kombes Pol Drs. H. Solihin\nPangkat: Kombes Pol\nJabatan: Kabid Bidbingadik\nFoto: \n\nNama: AKBP H. Romli\nPangkat: AKBP\nJabatan: Kasubbid Sespimti Bidbingadik\nFoto: \n\nNama: AKBP H. Wahyu\nPangkat: AKBP\nJabatan: Kasubbid Sespimmen Bidbingadik\nFoto: \n\nNama: AKBP H. Tri\nPangkat: AKBP\nJabatan: Kasubbid Sespimma Bidbingadik\nFoto: \n\nKELOMPOK: PARA KEPALA SEKOLAH\nNama: Brigjen Pol Patrige R. Renwarin, S.H.\nPangkat: Brigjen Pol\nJabatan: Kepala Sekolah Staf dan Pimpinan Tinggi Polri (Kasespimti)\nFoto: \n\nNama: Brigjen Pol Setijo Nugroho, S.I.K.\nPangkat: Brigjen Pol\nJabatan: Kepala Sekolah Staf dan Pimpinan Menengah Polri (Kasespimmen)\nFoto: \n\nNama: Brigjen Pol Drs. H. Mulyono\nPangkat: Brigjen Pol\nJabatan: Kepala Sekolah Pengembangan Profesi Kepolisian (Ka SPPK)\nFoto: \n\nNama: Brigjen Pol Drs. H. M. Romli\nPangkat: Brigjen Pol\nJabatan: Kepala Sekolah Staf dan Pimpinan Pertama (Kasespimma)\nFoto: '),('p-6','Fasilitas Belajar & Sarana Olahraga','Fasilitas','2026-06-24','Published','Admin','2026-07-08 07:59:27','2026-07-11 18:07:25','','KELOMPOK: INFORMASI FASILITAS PENDIDIKAN\nNama: Gedung Utaryo\nKeterangan: Sarana Ballroom Acara Kebesaran Sespim\nFoto: \n\nNama: Gedung Andrawina\nKeterangan: Sarana Pendukung Ballroom Acara Kebesaran Sespim (Ruang Perjamuan Kebesaran)\nFoto: \n\nKELOMPOK: RUANG KELAS\nNama: Gedung Kelas Sespimti\nKeterangan: Ruang kelas modern berkapasitas besar dengan sarana teleconference multimedia lengkap.\nFoto: \n\nNama: Gedung Kelas Sespimmen\nKeterangan: Ruang kelas interaktif untuk pembelajaran kolaboratif berbasis studi kasus.\nFoto: \n\nNama: Gedung Kelas Sespimma\nKeterangan: Ruang kelas yang nyaman didukung dengan smart board dan AC sentral.\nFoto: \n\nNama: Gedung Kelas SPPK\nKeterangan: Sarana pembelajaran ruang terbuka bergaya teater untuk kuliah luar ruangan dan diskusi santai.\nFoto: \n\nKELOMPOK: ASRAMA\nNama: Dormitory Sespimti (Wisma VIP)\nKeterangan: Kompleks penginapan eksklusif setara hotel bintang lima untuk peserta didik Sespimti.\nFoto: \n\nNama: Dormitory Sespimmen\nKeterangan: Hunian asrama yang asri dan nyaman untuk menunjang konsentrasi belajar mandiri.\nFoto: \n\nNama: Dormitory Sespimma\nKeterangan: Kompleks asrama berkapasitas memadai dengan fasilitas olahraga dan rekreasi terpadu.\nFoto: \n\nKELOMPOK: PENDUKUNG AKADEMIK\nNama: Perpustakaan Djoko Soetono (e-Library)\nKeterangan: Akses ribuan judul buku, jurnal ilmiah, dan e-book pendukung riset kepolisian.\nFoto: \n\nNama: Laboratorium Simulasi Kepemimpinan\nKeterangan: Sarana praktik teknologi informasi dan peningkatan kemampuan bahasa asing peserta didik.\nFoto: \n\nNama: Ruang Simulasi Taktis (Tactical Floor Game)\nKeterangan: Fasilitas simulasi taktis untuk latihan olah strategi lapangan dan komando operasi bagi peserta didik.\nFoto: \n\nKELOMPOK: FASILITAS UMUM\nNama: Stadion Olahraga Presisi (Helipad)\nKeterangan: Stadion sepak bola dengan lintasan lari standar internasional untuk pembinaan fisik peserta didik.\nFoto: \n\nNama: Gedung Olahraga Tribrata (Gym & Indoor Court)\nKeterangan: Fasilitas kebugaran jasmani lengkap beserta lapangan bulutangkis, basket, dan tenis meja indoor.\nFoto: \n\nNama: Klinik Pratama Sespim\nKeterangan: Pusat layanan kesehatan 24 jam terpadu untuk pelayanan peserta didik dan staf.\nFoto: \n\nNama: Masjid Panggilan Sujud\nKeterangan: Tempat Ibadah Agama Islam\nFoto: \n\nNama: Kapel\nKeterangan: Tempat Ibadah Katolik\nFoto: \n\nNama: Gereja\nKeterangan: Tempat Ibadah Kristen\nFoto: \n\nNama: Pura\nKeterangan: Tempat Ibadah Hindu\nFoto: \n\nNama: Vihara\nKeterangan: Tempat Ibadah Budha\nFoto: \n\nKELOMPOK: RUANG KELAS\nNama: Gedung Pentagon\nKeterangan: Ruang Kelas Serbaguna\nFoto: \n\nKELOMPOK: PENDUKUNG AKADEMIK\nNama: Gedung Leader Heritage\nKeterangan: Museum Kepemimpinan\nFoto:'),('p-7','Alamat dan Nomor Kontak Resmi Sespim','Contact','2026-07-05','Published','Admin','2026-07-08 07:59:27','2026-07-11 04:28:03',NULL,'Nama Agen Chatbot: Agen Wira\nWhatsApp Chatbot URL: https://wa.me/628123456789?text=Halo%20Agen%20Wira,%20saya%20ingin%20bertanya%20seputar%20Sespim\nAlamat Resmi: Jl. Maribaya No.53, Kayuambon, Kec. Lembang, Kabupaten Bandung Barat, Jawa Barat 40391, Indonesia\nNomor Kontak Resmi: +62 22 2786 110\nEmail Resmi: info@sespim-polri.id'),('p-8','Susunan Redaksi Website','Susunan Redaksi','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 05:32:12','','Penanggung Jawab:  Irjen Pol Prof. Dr. Eko Budi Sampurno, M.Si. (Kasespim Lemdiklat Polri)\n\nPengarah: Brigjen Pol Drs. Solihin, S.H. (Seslem) & Pejabat Utama Sespim Lemdiklat Polri\n\nPemimpin Redaksi:  Kabid Humas / Publikasi Sespim\n\nEditor: Tim Editor Sespim\n\nAdmin Teknis: Tim IT Sespim Lemdiklat Polri\n\nKontributor Sespimti: Staf dan Senat Sespimti Polri\nKontributor Sespimmen: Staf dan Senat Sespimmen Polri\nKontributor SPPK: Staf dan Senat SPPK Polri\nKontributor Sespimma: Staf dan Senat Sespimma Polri\nKontributor Bidang: Tim Kontributor Bidang\nKontributor Jianbang: Tim Kontributor Jianbang\nKontributor Setlem: Tim Kontributor Setlem\nKontributor Widyaiswara: Tim Kontributor Widyaiswara\nReviewer: Tim Reviewer Konten Sespim');
+/*!40000 ALTER TABLE `profil_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `program_pendidikan_content`
+--
+
+DROP TABLE IF EXISTS `program_pendidikan_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `program_pendidikan_content` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `program_pendidikan_content`
+--
+
+LOCK TABLES `program_pendidikan_content` WRITE;
+/*!40000 ALTER TABLE `program_pendidikan_content` DISABLE KEYS */;
+INSERT INTO `program_pendidikan_content` VALUES ('e-1','Kalender Pendidikan TA 2026','Kalender Pendidikan','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-2','Kurikulum Umum Sespimti','Kurikulum Umum','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-3','Pedoman Akademik Serdik','Pedoman Akademik','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-4','Evaluasi Mingguan dan Ujian','Evaluasi Pendidikan','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-5','Panduan KKLN / KKDN','Informasi Peserta Didik','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-6','Modul SESPIMTI POLRI','SESPIMTI','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-7','Modul SESPIMMEN POLRI','SESPIMMEN','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-8','Modul SESPIMMA POLRI','SESPIMMA','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('e-9','Modul SPPK POLRI','SPPK','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL),('prog-leadership-camp','Leadership Camp','program-sekolah','2026-07-11','Published','Admin','2026-07-11 15:11:41','2026-07-11 15:11:41',NULL,'{\"slug\":\"leadership-camp\",\"title\":\"Leadership Camp\",\"eyebrow\":\"Program Pendidikan\",\"href\":\"/program-pendidikan/leadership-camp\",\"summary\":\"Program pembinaan kepemimpinan, karakter, kolaborasi, dan disiplin untuk perwira Polri dan masyarakat luas.\",\"audience\":\"Masyarakat umum dan perwira siswa\",\"duration\":\"Menyesuaikan jadwal pelatihan\",\"level\":\"Pelatihan kepemimpinan dan karakter\",\"focusTitle\":\"Fokus Pelatihan\",\"outcomesTitle\":\"Kompetensi Utama\",\"stagesTitle\":\"Rangkaian Pembinaan\",\"statusTitle\":\"Program Pelatihan Unggulan\",\"statusDescription\":\"Leadership Camp adalah program strategis untuk mencetak karakter pemimpin yang kolaboratif, tangguh, dan adaptif.\",\"overview\":[\"Leadership Camp diselenggarakan sebagai ruang pembinaan kepemimpinan lapangan, pengembangan karakter, kolaborasi tim, dan ketahanan disiplin perwira siswa serta elemen masyarakat.\",\"Program ini menitikberatkan pada simulasi kepemimpinan, problem solving dalam kondisi dinamis, dan pembentukan integritas moral sebagai pilar kepemimpinan transformatif.\"],\"focusAreas\":[\"Pembentukan karakter disiplin\",\"Simulasi kepemimpinan lapangan\",\"Metode kolaborasi dan pemecahan masalah\",\"Integritas moral dan ketahanan fisik/mental\"],\"outcomes\":[\"Terbentuknya mental kepemimpinan yang adaptif\",\"Meningkatnya kemampuan koordinasi dan kerja sama tim\",\"Peningkatan kepemimpinan transformatif berbasis moral\"],\"stages\":[{\"title\":\"Registrasi dan Orientasi\",\"description\":\"Pembekalan awal materi dasar kepemimpinan dan pembagian kelompok pembinaan.\"},{\"title\":\"Simulasi Kepemimpinan\",\"description\":\"Latihan lapangan berbasis pemecahan masalah (Problem-Based Learning) secara terpadu.\"},{\"title\":\"Evaluasi & Pengukuhan\",\"description\":\"Refleksi capaian kepemimpinan tim dan pengukuhan kelulusan program.\"}],\"documents\":[{\"title\":\"Pedoman Leadership Camp\",\"href\":\"/program-pendidikan/pedoman-akademik\"}]}'),('prog-sespimma','SESPIMMA','program-sekolah','2026-07-10','Published','Admin','2026-07-11 14:43:22','2026-07-11 14:57:36','','{\"slug\":\"sespimma\",\"title\":\"SESPIMMA\",\"eyebrow\":\"Program Pendidikan\",\"href\":\"/program-pendidikan/sespimma\",\"summary\":\"Sekolah Staf dan Pimpinan Pertama Sekolah Staf dan Pimpinan Lembaga Pendidikan dan Pelatihan Kepolisian Negara Republik Indonesia atau Sespimma Sespim Lemdiklat Polri adalah unsur pelaksana utama Sespim Lemdiklat Polri yang berkedudukan langsung di bawah Kasespim Polri.\",\"audience\":\"Perwira siswa Sespimma\",\"duration\":\"Menyesuaikan kalender pendidikan\",\"level\":\"Kepemimpinan tingkat pertama\",\"focusTitle\":\"Tugas Sespimma\",\"outcomesTitle\":\"Ruang Tanggung Jawab\",\"stagesTitle\":\"Fungsi Sespimma\",\"statusTitle\":\"Unsur Pelaksana Utama\",\"statusDescription\":\"Sespimma Sespim Lemdiklat Polri berkedudukan langsung di bawah Kasespim Polri dan menyelenggarakan pendidikan tingkat pertama.\",\"overview\":[\"Sekolah Staf dan Pimpinan Pertama Sekolah Staf dan Pimpinan Lembaga Pendidikan dan Pelatihan Kepolisian Negara Republik Indonesia atau Sespimma Sespim Lemdiklat Polri adalah unsur pelaksana utama Sespim Lemdiklat Polri yang berkedudukan langsung di bawah Kasespim Polri.\",\"Sespimma Sespim Lemdiklat Polri dipimpin oleh seorang Kepala Sespimma berpangkat bintang satu atau Brigadir Jenderal Polisi Victor Togi Tambunan, S.H., S.I.K.\",\"Sespimma menyelenggarakan pendidikan, pengajaran, pelatihan, bimbingan, dan pemeliharaan disiplin perwira siswa di lingkungan Sespimma.\"],\"focusAreas\":[\"Menyelenggarakan pendidikan\",\"Menyusun program pendidikan\",\"Merumuskan program pengajaran dan pelatihan\",\"Melaksanakan bimbingan perwira siswa\",\"Memelihara disiplin perwira siswa\"],\"outcomes\":[\"Program pendidikan tersusun dan terlaksana\",\"Kegiatan pengajaran dan pelatihan terkendali\",\"Penilaian Widyaiswara, dosen, dan pembina terkoordinasi\",\"Administrasi pendidikan dan evaluasi hasil pendidikan terdokumentasi\"],\"stages\":[{\"title\":\"Rencana pendidikan\",\"description\":\"Menyusun rencana pendidikan, mengawasi, dan mengendalikan pelaksanaannya.\"},{\"title\":\"Perangkat kendali pendidikan\",\"description\":\"Melaksanakan koordinasi penyusunan perangkat kendali pendidikan Sespimma.\"},{\"title\":\"Pengajaran dan pelatihan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan kegiatan pengajaran dan pelatihan pada Sespimma.\"},{\"title\":\"Penilaian pendidikan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan penilaian yang dilakukan oleh Widyaiswara, dosen, dan pembina.\"},{\"title\":\"Administrasi pendidikan\",\"description\":\"Melaksanakan administrasi pendidikan termasuk alins, alongins, instruktur, dan pembina.\"},{\"title\":\"Evaluasi hasil pendidikan\",\"description\":\"Melakukan perencanaan dan evaluasi terhadap tujuan materi pendidikan serta membuat laporan mengenai hasil pendidikan.\"}],\"documents\":[{\"title\":\"Kalender Pendidikan\",\"href\":\"/program-pendidikan/kalender-pendidikan\"},{\"title\":\"Pedoman Akademik\",\"href\":\"/program-pendidikan/pedoman-akademik\"}]}'),('prog-sespimmen','SESPIMMEN','program-sekolah','2026-07-11','Published','Admin','2026-07-11 14:43:22','2026-07-11 14:43:22',NULL,'{\"slug\":\"sespimmen\",\"title\":\"SESPIMMEN\",\"eyebrow\":\"Program Pendidikan\",\"href\":\"/program-pendidikan/sespimmen\",\"summary\":\"Sekolah Staf dan Pimpinan Menengah Sespim Lemdiklat Polri adalah unsur pelaksana utama yang berkedudukan langsung di bawah Kasespim Polri.\",\"audience\":\"Perwira siswa Sespimmen\",\"duration\":\"Menyesuaikan kalender pendidikan\",\"level\":\"Kepemimpinan tingkat menengah\",\"focusTitle\":\"Tugas Sespimmen\",\"outcomesTitle\":\"Ruang Tanggung Jawab\",\"stagesTitle\":\"Fungsi Sespimmen\",\"statusTitle\":\"Unsur Pelaksana Utama\",\"statusDescription\":\"Sespimmen Sespim Lemdiklat Polri berkedudukan langsung di bawah Kasespim Polri dan menyelenggarakan pendidikan tingkat menengah.\",\"overview\":[\"Sekolah Staf dan Pimpinan Menengah Sekolah Staf dan Pimpinan Lembaga Pendidikan dan Pelatihan Kepolisian Negara Republik Indonesia atau Sespimmen Sespim Lemdiklat Polri adalah unsur pelaksana utama Sespim Lemdiklat Polri yang berkedudukan langsung di bawah Kasespim Polri.\",\"Sespimmen Sespim Lemdiklat Polri dipimpin oleh seorang Kepala Sespimmen berpangkat bintang satu atau Brigadir Jenderal Polisi dan saat ini dijabat oleh Brigadir Jenderal Polisi Rachmat Pamudji, S.I.K.\",\"Sespimmen menyelenggarakan pendidikan, pengajaran, pelatihan, bimbingan, dan pemeliharaan disiplin perwira siswa di lingkungan Sespimmen.\"],\"focusAreas\":[\"Menyelenggarakan pendidikan\",\"Menyusun program pendidikan\",\"Merumuskan program pengajaran dan pelatihan\",\"Melaksanakan bimbingan perwira siswa\",\"Memelihara disiplin perwira siswa\"],\"outcomes\":[\"Program pendidikan tersusun dan terlaksana\",\"Kegiatan pengajaran dan pelatihan terkendali\",\"Penilaian Widyaiswara, dosen, dan pembina terkoordinasi\",\"Administrasi pendidikan dan evaluasi hasil pendidikan terdokumentasi\"],\"stages\":[{\"title\":\"Rencana pendidikan\",\"description\":\"Menyusun rencana pendidikan, mengawasi, dan mengendalikan pelaksanaannya.\"},{\"title\":\"Perangkat kendali pendidikan\",\"description\":\"Melaksanakan koordinasi penyusunan perangkat kendali pendidikan Sespimmen.\"},{\"title\":\"Pengajaran dan pelatihan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan kegiatan pengajaran dan pelatihan pada Sespimmen.\"},{\"title\":\"Penilaian pendidikan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan penilaian yang dilakukan oleh Widyaiswara, dosen, dan pembina.\"},{\"title\":\"Administrasi pendidikan\",\"description\":\"Melaksanakan administrasi pendidikan termasuk alins, alongins, instruktur, dan pembina.\"},{\"title\":\"Evaluasi hasil pendidikan\",\"description\":\"Melakukan perencanaan dan evaluasi terhadap tujuan materi pendidikan serta membuat laporan mengenai hasil pendidikan.\"}],\"documents\":[{\"title\":\"Kurikulum Umum\",\"href\":\"/program-pendidikan/kurikulum\"},{\"title\":\"Evaluasi Pendidikan\",\"href\":\"/program-pendidikan/evaluasi-pendidikan\"}]}'),('prog-sespimti','SESPIMTI','program-sekolah','2026-07-11','Published','Admin','2026-07-11 14:43:22','2026-07-11 14:43:22',NULL,'{\"slug\":\"sespimti\",\"title\":\"SESPIMTI\",\"eyebrow\":\"Program Pendidikan\",\"href\":\"/program-pendidikan/sespimti\",\"summary\":\"Sekolah Staf dan Pimpinan Tinggi Sespim Lemdiklat Polri adalah unsur pelaksana utama yang berkedudukan langsung di bawah Kasespim Polri.\",\"audience\":\"Peserta Sespimti\",\"duration\":\"Menyesuaikan kalender pendidikan\",\"level\":\"Kepemimpinan tingkat tinggi\",\"focusTitle\":\"Tugas Sespimti\",\"outcomesTitle\":\"Ruang Tanggung Jawab\",\"stagesTitle\":\"Fungsi Sespimti\",\"statusTitle\":\"Unsur Pelaksana Utama\",\"statusDescription\":\"Sespimti Sespim Lemdiklat Polri berkedudukan langsung di bawah Kasespim Polri dan menyelenggarakan pendidikan kepemimpinan tingkat tinggi.\",\"overview\":[\"Sekolah Staf dan Pimpinan Tinggi Sespim Lemdiklat Polri atau Sespimti Sespim Lemdiklat Polri, dahulu bernama Sekolah Staf Perwira Tinggi atau Sespati, adalah unsur pelaksana utama Sespim Lemdiklat Polri yang berkedudukan langsung di bawah Kasespim Polri.\",\"Sespimti Sespim Lemdiklat Polri dipimpin oleh seorang Kepala Sespimti berpangkat bintang satu atau Brigadir Jenderal Polisi dan saat ini dijabat oleh Brigadir Jenderal Polisi Eko Suprihanto, S.H., S.I.K., M.H.\",\"Sespimti menyelenggarakan pendidikan, pengajaran, pelatihan, bimbingan, dan pemeliharaan disiplin peserta di lingkungan Sespimti.\",\"<br/><h3 class=\\\"text-lg font-black text-polri-brownDark mt-2 border-b border-polri-gold/25 pb-2\\\">Kurikulum Sespimti Polri 2026, Mencetak Pemimpin Masa Depan</h3>\",\"<strong>Visi dan Tema Pendidikan</strong> Menghadapi dinamika global dan tantangan keamanan nasional yang semakin kompleks, Sekolah Staf dan Pimpinan Tinggi (Sespimti) Polri Tahun Ajaran 2026 hadir dengan paradigma baru. Kurikulum tahun ini mengusung tema mulia: <strong>\\\"Mewujudkan pimpinan tingkat tinggi Polri, kementerian, dan lembaga yang membangun keutamaan pendidikan berbasis moral dan literasi\\\"</strong>. Program ini secara strategis dirancang untuk mendukung penuh program nasional dalam mencapai kedaulatan Pangan, Energi, dan Ekonomi yang produktif serta inklusif.\",\"<strong>Profil Lulusan: Pemimpin Transformatif & Kolaboratif</strong> Sespimti Polri bukan sekadar lembaga pendidikan, melainkan kawah candradimuka bagi para calon petinggi negara. Lulusan Sespimti diproyeksikan untuk menjadi:<br/><ul class=\\\"list-disc pl-5 mt-2 space-y-1\\\"><li><strong>Pemimpin Strategis</strong> yang profesional, cerdas, bermoral, modern, transformatif, dan kolaboratif.</li><li><strong>Manajer Organisasi Tingkat Tinggi</strong> yang mampu mengambil keputusan di bawah tekanan, berintegritas, dan berorientasi pada pelayanan publik.</li></ul>\",\"Untuk mencapai profil tersebut, peserta didik dibekali dengan tiga pilar kompetensi utama: <strong>Kompetensi Manajerial</strong> (integritas, orientasi hasil, mengelola perubahan), <strong>Kompetensi Sosial Kultural</strong> (sebagai perekat persatuan bangsa yang anti-diskriminatif dan anti-KKN), serta <strong>Kompetensi Teknis</strong> (penguasaan manajemen strategis dan operasional institusi).\",\"<strong>Fokus Pembelajaran: Berbasis Praktik dan Pemecahan Masalah</strong> Pendidikan dilaksanakan secara intensif selama 5 bulan (1.000 Jam Pelajaran), dengan struktur yang sangat aplikatif, yaitu <strong>75% praktik dan 25% teori</strong>. Peserta didik akan mendalami materi-materi mutakhir yang dibagi ke dalam beberapa kelompok utama:<br/><ol class=\\\"list-decimal pl-5 mt-2 space-y-2\\\"><li><strong>Penguatan Karakter Kebangsaan:</strong> Memperdalam sejarah, nilai-nilai Pancasila, etika kepemimpinan, dan wawasan nusantara untuk menjaga stabilitas dan persatuan nasional.</li><li><strong>Manajemen Strategis dan Kepemimpinan Organisasi:</strong> Mengembangkan kapasitas kepemimpinan di tingkat puncak, termasuk perumusan visi organisasi, manajemen perubahan, tata kelola sumber daya, serta koordinasi strategis lintas sektoral.</li><li><strong>Analisis Lingkungan Strategis (Geopolitik & Keamanan):</strong> Mengkaji secara komprehensif ancaman keamanan global, dinamika regional, geopolitik nasional, serta strategi penanganan isu kontemporer demi menjaga stabilitas kamtibmas.</li><li><strong>Teknologi dan Kepemimpinan Digital Berbasis Data:</strong> Membekali perwira tinggi dengan kemampuan adaptasi teknologi, tata kelola keamanan siber, dan pemanfaatan <em>big data</em> untuk pengambilan keputusan taktis dan strategis.</li><li><strong>Aplikasi Metodologi & Riset Strategis:</strong> Melatih penyusunan kajian ilmiah tingkat tinggi, termasuk Policy Brief, Naskah Akademik (NASTRAP), studi komparasi (KKLN/KKDN), serta pemecahan masalah (Problem-Based Learning) riil di lapangan.</li></ol>\"],\"focusAreas\":[\"Menyelenggarakan pendidikan\",\"Menyusun program pendidikan\",\"Merumuskan program pengajaran dan pelatihan\",\"Melaksanakan bimbingan peserta\",\"Memelihara disiplin peserta\"],\"outcomes\":[\"Program pendidikan tersusun dan terlaksana\",\"Kegiatan pengajaran dan pelatihan terkendali\",\"Penilaian Widyaiswara, dosen, dan pembina terkoordinasi\",\"Administrasi pendidikan dan evaluasi hasil pendidikan terdokumentasi\"],\"stages\":[{\"title\":\"Rencana pendidikan dan pembinaan peserta\",\"description\":\"Menyusun rencana pendidikan, mengawasi, dan mengendalikan pelaksanaannya serta melaksanakan fungsi pembinaan peserta didik.\"},{\"title\":\"Perangkat kendali pendidikan\",\"description\":\"Melaksanakan koordinasi penyusunan perangkat kendali pendidikan Sespimti.\"},{\"title\":\"Pengajaran dan pelatihan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan kegiatan pengajaran dan pelatihan pada Sespimti.\"},{\"title\":\"Penilaian pendidikan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan penilaian yang dilakukan oleh Widyaiswara, dosen, dan pembina.\"},{\"title\":\"Administrasi pendidikan\",\"description\":\"Melaksanakan administrasi pendidikan termasuk alins, alongins, instruktur, dan pembina.\"},{\"title\":\"Evaluasi hasil pendidikan\",\"description\":\"Melakukan perencanaan dan evaluasi terhadap tujuan materi pendidikan serta membuat laporan mengenai hasil pendidikan.\"}],\"documents\":[{\"title\":\"Kajian Strategis\",\"href\":\"/publikasi/kajian-strategis\"},{\"title\":\"Policy Brief\",\"href\":\"/publikasi/policy-brief\"}]}'),('prog-sppk','SPPK','program-sekolah','2026-07-11','Published','Admin','2026-07-11 14:43:22','2026-07-11 14:43:22',NULL,'{\"slug\":\"sppk\",\"title\":\"SPPK\",\"eyebrow\":\"Program Pendidikan\",\"href\":\"/program-pendidikan/sppk\",\"summary\":\"Sekolah Pengembangan Profesi Kepolisian Sespim Lemdiklat Polri adalah unsur pelaksana utama yang berkedudukan langsung di bawah Kasespim Polri.\",\"audience\":\"Perwira siswa SPPK\",\"duration\":\"Menyesuaikan kalender pendidikan\",\"level\":\"Pengembangan profesi kepolisian\",\"focusTitle\":\"Tugas SPPK\",\"outcomesTitle\":\"Ruang Tanggung Jawab\",\"stagesTitle\":\"Fungsi SPPK\",\"statusTitle\":\"Unsur Pelaksana Utama\",\"statusDescription\":\"SPPK Sespim Lemdiklat Polri berkedudukan langsung di bawah Kasespim Polri dan menyelenggarakan pendidikan pengembangan profesi kepolisian.\",\"overview\":[\"Sekolah Pengembangan Profesi Kepolisian, Sekolah Staf dan Pimpinan Lembaga Pendidikan dan Pelatihan Kepolisian Negara Republik Indonesia atau SPPK Sespim Lemdiklat Polri adalah unsur pelaksana utama Sespim Lemdiklat Polri yang berkedudukan langsung di bawah Kasespim Polri.\",\"SPPK Sespim Lemdiklat Polri dipimpin oleh seorang Kepala SPPK berpangkat bintang satu atau Brigadir Jenderal Polisi dan saat ini dijabat oleh Brigjen Pol. Dr. H. Nurholis, S.I.K., M.Si.\",\"SPPK menyelenggarakan pendidikan, pengajaran, pelatihan, bimbingan, dan pemeliharaan disiplin perwira siswa di lingkungan SPPK.\"],\"focusAreas\":[\"Menyelenggarakan pendidikan\",\"Menyusun program pendidikan\",\"Merumuskan program pengajaran dan pelatihan\",\"Melaksanakan bimbingan perwira siswa\",\"Memelihara disiplin perwira siswa\"],\"outcomes\":[\"Program pendidikan tersusun dan terlaksana\",\"Kegiatan pengajaran dan pelatihan terkendali\",\"Penilaian Widyaiswara, dosen, dan pembina terkoordinasi\",\"Administrasi pendidikan dan evaluasi hasil pendidikan terdokumentasi\"],\"stages\":[{\"title\":\"Rencana pendidikan\",\"description\":\"Menyusun rencana pendidikan, mengawasi, dan mengendalikan pelaksanaannya.\"},{\"title\":\"Perangkat kendali pendidikan\",\"description\":\"Melaksanakan koordinasi penyusunan perangkat kendali pendidikan SPPK.\"},{\"title\":\"Pengajaran dan pelatihan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan kegiatan pengajaran dan pelatihan pada SPPK.\"},{\"title\":\"Penilaian pendidikan\",\"description\":\"Melaksanakan koordinasi, pengendalian, dan pengawasan penilaian yang dilakukan oleh Widyaiswara, dosen, dan pembina.\"},{\"title\":\"Administrasi pendidikan\",\"description\":\"Melaksanakan administrasi pendidikan termasuk alins, alongins, instruktur, dan pembina.\"},{\"title\":\"Evaluasi hasil pendidikan\",\"description\":\"Melakukan perencanaan dan evaluasi terhadap tujuan materi pendidikan serta membuat laporan mengenai hasil pendidikan.\"}],\"documents\":[{\"title\":\"Informasi Peserta Didik\",\"href\":\"/program-pendidikan/peserta-didik\"},{\"title\":\"Template NASKAP\",\"href\":\"/unduhan/template-naskap\"}]}');
+/*!40000 ALTER TABLE `program_pendidikan_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `publikasi_content`
+--
+
+DROP TABLE IF EXISTS `publikasi_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publikasi_content` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `publikasi_content`
+--
+
+LOCK TABLES `publikasi_content` WRITE;
+/*!40000 ALTER TABLE `publikasi_content` DISABLE KEYS */;
+INSERT INTO `publikasi_content` VALUES ('pub-1','Artikel Opini Kepemimpinan Modern','Artikel','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Artikel opini kepolisian mengenai tantangan kepemimpinan kepolisian modern di era digital. Membahas pentingnya penguatan aspek integritas moral, pengambilan keputusan berbasis data (evidence-based policing), dan kolaborasi lintas sektoral.'),('pub-2','Policy Brief Kamtibmas Cyber','Policy Brief','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Policy brief strategis yang merumuskan rekomendasi kebijakan untuk memperkuat keamanan siber dan penanganan kejahatan digital di lingkungan Kepolisian Daerah dalam menghadapi kejahatan transnasional.'),('pub-3','Kajian Strategis Penanganan Kejahatan Jalanan','Kajian Strategis','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kajian komprehensif mengenai pola kejahatan jalanan kontemporer dan strategi pencegahan serta penindakan yang efektif oleh satuan wilayah kepolisian resor melalui optimalisasi patroli preventif.'),('pub-4','Naskah Akademik Narkotika Siber','Naskah Akademik','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Rancangan naskah akademik sebagai landasan formulasi regulasi dan standar prosedur operasional kepolisian dalam mendeteksi dan menanggulangi peredaran gelap narkotika jaringan internasional siber.'),('pub-5','Jurnal Ilmiah Sespim Volume 24','Jurnal Ilmiah','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Jurnal ilmiah Sespim Lemdiklat Polri Volume 24 yang memuat hasil riset, kajian teoritis, dan tulisan ilmiah para Widyaiswara mengenai optimalisasi manajemen keamanan nasional.'),('pub-6','Resensi Buku Pengamanan Intelijen','Resensi Buku','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Resensi buku taktik dan teknik pengamanan intelijen strategis untuk mendukung pelaksanaan tugas manajer menengah kepolisian dalam memetakan potensi kerawanan sosial.'),('pub-7','Karya Terbaik Peserta Didik TA 2026','Karya Peserta Didik','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kumpulan naskah karya perorangan (Naskap) terbaik dari peserta didik Sespimti, Sespimmen, dan Sespimma Tahun Ajaran 2026 yang dinilai memiliki keunggulan akademis dan relevansi kebijakan.');
+/*!40000 ALTER TABLE `publikasi_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sarana_prasarana_content`
+--
+
 DROP TABLE IF EXISTS `sarana_prasarana_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sarana_prasarana_content` (
-  `id` VARCHAR(50) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(100) NOT NULL,
-  `date` DATE NOT NULL,
-  `status` ENUM('Published', 'Draft') NOT NULL DEFAULT 'Published',
-  `author` VARCHAR(100) DEFAULT 'Admin',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
--- DATA DUMP
--- --------------------------------------------------------
+--
+-- Dumping data for table `sarana_prasarana_content`
+--
+
+LOCK TABLES `sarana_prasarana_content` WRITE;
+/*!40000 ALTER TABLE `sarana_prasarana_content` DISABLE KEYS */;
+INSERT INTO `sarana_prasarana_content` VALUES ('s-1','eLibrary Katalog Digital SLIMS','eLibrary','2026-06-30','Published','Admin','2026-07-08 07:59:27','2026-07-11 17:10:04','','Tautan dan panduan akses katalog digital perpustakaan Sespim (SLiMS) yang memudahkan pencarian ribuan koleksi buku cetak, referensi, dan naskah dinas.'),('s-2','Portal Perpusnas Indonesia','Perpusnas','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Portal integrasi akses ke layanan keanggotaan Perpustakaan Nasional (Perpusnas) RI untuk memfasilitasi kebutuhan referensi ilmiah perwira siswa.'),('s-3','Koleksi Ejurnal Internasional','Ejurnal','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Tautan resmi akses database ejurnal internasional terkemuka yang dilanggan Lemdiklat Polri untuk mendukung riset dan penyusunan tugas akhir.'),('s-4','LMS SIAPSESPIM Platform Pembelajaran','LMS SIAPSESPIM','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Panduan operasional dan masuk ke Learning Management System (LMS) SIAPSESPIM sebagai platform utama pembelajaran jarak jauh dan ujian digital.'),('s-5','Turnitin Cek Plagiarisme','Cek Plagiarisme','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Layanan Turnitin mandiri bagi perwira siswa untuk mengecek tingkat plagiarisme dan memverifikasi keaslian naskah sebelum diserahkan ke pembimbing.'),('s-6','Klinik Pratama Sespim Polri','Klinik Pratama','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Informasi sarana medis, dokter spesialis, jadwal layanan, dan fasilitas pengobatan rawat jalan di Klinik Pratama Sespim Lemdiklat Polri.');
+/*!40000 ALTER TABLE `sarana_prasarana_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  `nrp_nip` varchar(50) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('super_admin','stakeholder','admin','serdik','widyaiswara') NOT NULL,
+  `role_label` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `keahlian` varchar(255) DEFAULT NULL,
+  `sertifikasi` varchar(255) DEFAULT NULL,
+  `program` varchar(100) DEFAULT NULL,
+  `angkatan` varchar(100) DEFAULT NULL,
+  `pangkat` varchar(100) DEFAULT NULL,
+  `gelar` varchar(100) DEFAULT NULL,
+  `foto` longtext DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `no_serdik` varchar(50) DEFAULT NULL,
+  `instansi_polri` varchar(150) DEFAULT NULL,
+  `kementerian_lembaga` varchar(150) DEFAULT NULL,
+  `negara_asal` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nrp_nip_unique` (`nrp_nip`)
+) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
 --
-INSERT INTO `users` (`name`, `nrp_nip`, `phone`, `password`, `role`, `role_label`) VALUES
-('Irjen Pol. Midi Siswoko, S.I.K.', '70012124', '081122334455', 'polri123', 'stakeholder', 'Super Admin Read Only / Stakeholder'),
-('Brigjen Pol. Dr. H. Nurholis', '197505121998031002', '081199887766', 'polri123', 'stakeholder', 'Super Admin Read Only / Stakeholder'),
-('Bripda Bagus Prasetyo', '200108242022031001', '081234567890', 'polri123', 'admin', 'Admin (Staf)'),
-('AKBP Deny Haryanto, S.I.K., M.Si.', '84081234', '081388889999', 'polri123', 'serdik', 'User Serdik (Peserta Didik)'),
-('Irjen Pol. Chuzaini Patoppoi, S.St.Mk., S.H.', '68120455', '081277776666', 'polri123', 'widyaiswara', 'User Widyaiswara (Tenaga Pendidik)');
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'AKBP Deny Haryanto, S.I.K., M.Si.','84081234','','polri123','serdik','User Serdik (Peserta Didik)','2026-07-08 07:59:27','2026-07-08 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'IRJEN POL MIDI SISWOKO, S.I.K.','70012124','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-09 07:59:27','2026-07-09 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'IPDA DENY CHANDRA PRAMANA, S.I.P., M.H.','93080229','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'IRJEN POL CHUZAINI PATOPPOI, S.St.Mk., S.H.','68120455','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'IRJEN POL Drs. JAWARI, S.H., M.H.','69060168','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'IRJEN POL ABIOSO SENO AJI, S.I.K., M.H.','70100287','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'IRJEN POL MOHAMAD AGUNG BUDIJONO, S.I.K., M.Si.','70020178','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'IRJEN POL MUSA IKIPSON MANAEK MUARA TAMPUBOLON, S.H., M.Si.','69080351','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'IRJEN POL BARIZA SULFI','69080579','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'IRJEN POL Drs. AGUS DJAKA SANTOSO','68080358','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,'IRJEN POL NURWORO DANANG, S.I.K.','69070429','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,'IRJEN POL MUKTI JUHARSA, S.I.K., M.H.','71110421','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,'IRJEN POL R. YOSEPH WIHASTONO YOGA PRANOTO, S.I.K.,M.Hum.','69030316','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(14,'IRJEN POL Y. TONY SURYA PUTRA, S.I.K., M.H.','73010679','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,'IRJEN POL Dr. M. SABILUL ALIF S.H., S.I.K., M.Si.','75060699','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,'IRJEN POL Dr. RAKHMAD SETYADI, S.I.K., S.H., M.H.','72100371','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,'IRJEN POL Dr. TONI ARIADI EFENDI, S.H., S.I.K., M.H., M.M.','71010437','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,'IRJEN POL ROMA HUTAJULU, S.I.K., M.Si.','72070511','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,'IRJEN POL Dr. FAIZAL RAMADHANI, S.Sos., S.I.K., M.H.','74100557','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,'IRJEN POL Dr. JOKO SETIONO, S.H., S.I.K., M.Hum.','75060701','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(21,'IRJEN POL MUHAMMAD TASLIM CHAIRUDDIN, S.I.K., M.H.','70110332','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,'IRJEN POL BAHTIAR UJANG PURNAMA, S.I.K., M.Si.','72050480','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,'IRJEN POL Drs. HERMAN SIKUMBANG, M.M.','68070336','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24,'BRIGJEN POL SLAMET HARIYADI, S.I.K., M.H., M.M.','69120419','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(25,'BRIGJEN POL DR. SUSETIO CAHYADI, C.FR.A, C.SA., S.I.K., M.M., M.H.','70050462','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(26,'BRIGJEN POL DICKY PATRIA NEGARA, S.H., S.I.K., M.Si.','71110257','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(27,'BRIGJEN POL YUSTAN ALPIANI, S.I.K., S.H., M.Hum.','69070423','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(28,'BRIGJEN POL MISBAHUL MUNAUWAR, S.H.','69060324','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(29,'BRIGJEN POL HERO HENDRIANTO BACHTIAR, S.I.K., M.Si.','69110232','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(30,'BRIGJEN POL MUHAMMAD FIRMAN, S.I.K., M.Si.','71040684','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(31,'BRIGJEN POL MARDIAZ KUSIN DWIHANANTO, S.I.K., M.Hum.','71120264','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(32,'BRIGJEN POL RATNO KUNCORO, S.I.K., M.Si.','72060547','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(33,'BRIGJEN POL DEFRIAN DONIMANDO, S.I.K., M.H.','73100439','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(34,'BRIGJEN POL DANI KUSTONI, S.H., S.I.K., M.Hum.','71120452','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(35,'BRIGJEN POL ENJANG HASAN KURNIA, S.I.K.','69110335','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(36,'BRIGJEN POL PRIYO WASESO, S.Si., M.P.P.','71090261','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(37,'BRIGJEN POL NURCHOLIS, S.I.K., M.Si.','70100286','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(38,'BRIGJEN POL R. FERRY INDARMAWAN, S.H., S.I.K.','70020175','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(39,'BRIGJEN POL OKTAVIANUS MARTHIN, S.I.K.','70100281','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(40,'BRIGJEN POL MUHAMMAD ARIF SUGIARTO, S.I.K., M.P.P.','75010582','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(41,'BRIGJEN POL HANDO WIBOWO, S.I.K., M,Si., M.Han.','74090552','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(42,'BRIGJEN POL SUGENG PUTUT WICAKSONO, S.I.K.','73070290','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(43,'BRIGJEN POL JUDA NUSA PUTRA, S.I.K., M.M.','74090752','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(44,'BRIGJEN POL SANGKAN BONAPARTE SILALAHI, S.I.K.','71080526','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(45,'BRIGJEN POL DWI SUBAGIO, S.I.K., M.H.','70070208','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(46,'BRIGJEN POL YOSEF SRIYONO JOKO HANDONO, S.I.K., M.H.','73010267','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(47,'BRIGJEN POL FAJAR BUDIYANTO, S.I.K., M.M.','72040514','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(48,'BRIGJEN POL IRWAN ANWAR, S.I.K., M.M.','72020459','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(49,'BRIGJEN POL JIMMY AGUSTINUS ANES, S.I.K.','71080345','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(50,'BRIGJEN POL Dr. HARRYO SUGIHHARTONO, S.I.K., M.H.','73070704','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(51,'BRIGJEN POL NICOLAS ARY LILIPALYN S.I.K., M.H., M.Si.','73090617','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(52,'BRIGJEN POL HENDRA KURNIAWAN, S.I.K., M.M., M.H.','74060713','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(53,'BRIGJEN POL R. DEDEN GARNADA, S.I.K., M.Han.','69050449','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(54,'BRIGJEN POL TRI BISONO SOEMIHARSO, S.I.K., M.H.','72040505','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(55,'BRIGJEN POL KURNIADI, S.I.K., S.H., M.Si.','70012116','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(56,'BRIGJEN POL I KETUT GEDE WIJATMIKA, S.I.K.','72050226','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(57,'BRIGJEN POL DENNY SETIA NUGRAHA NASUTION, S.I.K., M.H.','72120638','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(58,'BRIGJEN POL NURHANDONO, S.I.K., M.H.','73070557','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(59,'BRIGJEN POL HERY DIAN DWIHARTO, S.I.K.','75110777','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(60,'BRIGJEN POL SEMMY RONNY THABAA, S.E.','72090627','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(61,'BRIGJEN POL IVAN ADHITYAS NUGRAHA, S.I.K., M.Si.','74060711','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(62,'KOMBES POL R. KASERO MANGGOLO, S.Sos., S.H., M.H., M.Si.','69080650','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(63,'KOMBES POL Dr. TEDDY JOHN SAHALA MARBUN, S.H., M.Hum.','69070420','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(64,'KOMBES POL MUHAMMAD BARLY RAMADHANY, S.I.K., S.H., M.H.','70110327','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(65,'KOMBES POL DENI HERMANA, S.I.K., M.Si.','70070363','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(66,'KOMBES POL DEDE ALAMSYAH, S.I.K.','70100398','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(67,'KOMBES POL AGUS WIBOWO, S.I.K.','72080758','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(68,'KOMBES POL BENEDICTUS ANIES PURNAWAN, S.I.K., M.Si.','71040398','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(69,'KOMBES POL ILHAM SAPARONA, S.I.K., S.H.','71080335','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(70,'KOMBES POL SARIF RAHMAN, S.I.K., M.M.','71090439','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(71,'KOMBES POL BUDI SATRIJO, S.I.K., M.Hum. ','71090443','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(72,'KOMBES POL WALUYA, S.I.K.','71100499','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(73,'KOMBES POL MUHAMMAD ANWAR REKSOWIDJOJO, S.H., S.I.K.','71060470','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(74,'KOMBES POL HARIADI, S.H., S.I.K., M.H.','72050477','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(75,'KOMBES POL SATRIA ADHY PERMANA, S.I.K., M.Hum.','72050479','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(76,'KOMBES POL DANU KUSWORO, S.I.K.','72070701','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(77,'KOMBES POL RUMINIO ARDANO, S.I.K.','74090747','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(78,'KOMBES POL DOLIFAR MANURUNG, S.I.K.','74120628','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(79,'KOMBES POL BUDI PURWATININGSIH, S.E., M.H.','74020573','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(80,'KOMBES POL KINGKIN WINISUDA, S.H., S.I.K.','75050534','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(81,'KOMBES POL MUGI SEKAR JAYA, S.Sos., S.I.K.','76030827','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(82,'KOMBES POL OMAD, S.I.K., M.Si.','68070470','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(83,'KOMBES POL ULAMI SUDJAJA, S.H. ','68070582','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(84,'KOMBES POL SIGIT KUSMARDJOKO, S.H., M.H.','68120316','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(85,'KOMBES POL FAUZA BARITO, S.H.','68120537','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(86,'KOMBES POL PEPEN SUPENA WIJAYA, S.I.K.','69060515','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(87,'KOMBES POL GUNTUR HINDARSYAH,S.I.K','69120506','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(88,'KOMBES POL TARYADI, S.I.K.','70020377','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(89,'KOMBES POL BENYAMIN SAPTA TRANGGONO, S.I.K., M.Si.','70090400','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(90,'KOMBES POL BARTHOLOMEUS MEISON SAGALA, S.H., S.I.K., M.H.','71050403','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(91,'KOMBES POL WANDY RUSTIWAN, S.I.K., M.M.Tr.','72060219','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(92,'KOMBES POL HALASAN ROLAND SITUMEANG, S.I.K.','72030429','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(93,'KOMBES POL M. HARI MULYANTO, S.I.K., M.M.','74090550','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(94,'KOMBES POL ASEP AMAR PERMANA, S.I.K., M.M.','73030680','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(95,'KOMBES POL NOFFAN WIDYAYOKO, S.I.K. M.A. ','73050305','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(96,'KOMBES POL EKO WAHYUDI, S.I.K., M.H.','73120848','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(97,'KOMBES POL I MADE KUSUMA JAYA, S.H., S.I.K.','74040749','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(98,'KOMBES POL MUHAMMAD HELMI, S.I.K.','74080676','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(99,'KOMBES POL YURY NURHIDAYAT, S.I.K., M.H.','75120907','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(100,'KOMBES POL ARDI SUTRIONO, S.I.K.','76030841','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(101,'KOMBES POL YOGA PRASETYO, S.I.K.','77050674','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(102,'KOMBES POL DEDI AGUSTONO, S.I.K., M.H.','73080765','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(103,'KOMBES POL DIDIK DWI SANTOSO, S.I.K.','74060723','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(104,'KOMBES POL DARMAWAN AFFANDY, S.I.K., M.M.','74100548','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(105,'KOMBES POL HENDRA GUNAWAN, S.I.K., M.T.','80061174','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(106,'KOMBES POL EKA DJUNAEDI, S.Sos., S.I.K.','71050397','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(107,'KOMBES POL PURNAMA, S.I.K.','71060405','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(108,'KOMBES POL MAHYUDI NAZRIANSYAH, S.I.K.','73060598','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(109,'KOMBES POL JUNOTO, S.I.K., M.H.','75111003','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(110,'KOMBES POL ASRIAL KURNIANSYAH, S.H.','68100534','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(111,'KOMBES POL YOGA PRASTOWO, S.I.K., M.T.','74090548','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(112,'KOMBES POL BARLIANSYAH, S.I.K., M.H.','74040734','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(113,'KOMBES POL INDERA GUNAWAN, S.I.K.','74020575','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(114,'KOMBES POL ARI LASTA IRAWAN, S.I.K., M.S.M.','76090957','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(115,'KOMBES POL FILLOL PRAJA ARTHADIRA, S.H., S.I.K.','79020750','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(116,'KOMBES POL M. ARIF RIFA\'I, S.I.K.','76050577','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(117,'KOMBES POL DENY AGUNG ANDRIANA, S.I.K., M.H.','77110997','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(118,'KOMBES POL EKA SURAHMAN, S.I.K.','76010505','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(119,'KOMBES POL ANDI SOPHIAN, S.I.K.','76100865','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(120,'KOMBES POL TULUS JUSWANTORO, S.I.K.','70060444','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(121,'KOMBES POL ANDRI ISKANDAR, S.I.K., M.Si., M.H.','75040836','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(122,'KOMBES POL RULI ANDI YUNIANTO, S.I.K.','77040607','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(123,'KOMBES POL EDWIN AFFANDI, S.I.K., M.H., CPHR.','81040855','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(124,'KOMBES POL HERU EKWANTO, S.I.K.','79010773','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(125,'KOMBES POL HADI SYAFRIADIN, S.I.K.','71080517','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(126,'KOMBES POL TEJA LESMANA, S.I.K.','76010513','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(127,'KOMBES POL LEO HAMONANGAN SIAGIAN, S.I.K., M.Sc.','76070946','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(128,'KOMBES POL BIMA ARIA VIYASA, S.I.K., M.H.','77051042','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(129,'KOMBES POL AGUS BAHARI PARAMA ARTHA, S.I.K., S.H., M.Si.','78011062','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(130,'KOMBES POL ICHSAN NUR, S.I.K.','78061014','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(131,'KOMBES POL INDRA NOVIANTO, S.I.K., M.H., M.Si., CPHR.','82111157','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(132,'KOMBES POL GALIH INDRAGIRI, S.I.K.','80031063','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(133,'KOMBES POL YUSFANDI USMAN, S.I.K., M.I.K.','82051106','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(134,'KOMBES POL DONI PRAKOSO WIDAMANTO, S.I.K.','81091017','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(135,'KOMBES POL DRIHARTO, S.I.K.','78061005','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(136,'KOMBES POL HENRY POSMA LUBIS, S.I.K., M.H.','76070949','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(137,'KOMBES POL ANDRI SISWAN ANSYAH, S.I.K., M.H.','77110838','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(138,'KOMBES POL GATOT ISTANTO, S.I.K.','78020895','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(139,'KOMBES POL BRONTO BUDIYONO, S.I.K., M.H.','76101145','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(140,'KOMBES POL MOCHAMAD NUR AZIS, S.H., S.I.K., M.Si.','79061536','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(141,'KOMBES POL GRACE KRISNA D. RAHAKBAU, S.I.K., M.Si.','76110038','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(142,'KOMBES POL EFRIANZA, S.I.K.','79040926','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(143,'KOMBES POL HIDAYAT, S.H., S.I.K.','76030911','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(144,'KOMBES POL DIDIT EKO HERAWANTO, S.I.K., S.H.','74090553','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(145,'KOMBES POL DHANI GUMILAR, S.H., S.I.K., M.H.','78081568','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(146,'AKBP ASEP KAMALUDIN, M.M','70070807','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(147,'AKBP DEWI SUSILO PANGESTUTI, S.Ak.','74030201','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(148,'AKBP SANTHI RIANAWATI, S.H.','76071042','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(150,'AKBP ANRIA ROSA PALIANG, S.I.K.','87011422','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(151,'KOMPOL M. ICHWAN NUGRAHA, S.I.K., M.Si.','88032042','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(152,'AKBP LUSY JULI INDRIANI, S.I.K.','82071408','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(153,'AKBP DINA NOVITASARI, S.H., S.I.K., M.H.','84111638','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(154,'KOMPOL RENTHA ULI NOVITA PARDEDE, S.H., S.I.K.','88110791','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(155,'AKBP RAHMAWATY TUMULO, S.I.K., M.M.','87061679','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(156,'KOMPOL TOTO SUGIARTO, S.Pd.','71060042','','polri123','widyaiswara','User Widyaiswara (Tenaga Pendidik)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(157,'KOMBES POL AGUS SETIYAWAN, S.I.K','70080427','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(158,'PENGATUR ARIYANTO SARYONO','198109232014121002','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(159,'AKBP H. MAX ALFRADIANTO, S.TP., S.H., M.H.','70050492','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(160,'PENATA I ARIANA, S.E.','198507072006041002','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(161,'AKBP LIDO RATRI ANTORO, S.H., S.I.K., M.M.','82061382','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(162,'PEMBINA dr. LILIS UTAMI KARDINAH TEBLU, M.Kes. ','198005232007012002','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(163,'PENATA IROM MUHAROM, S.Kom','197912072009121001','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(164,'PENDA I DEDEN BAYU SAPUTRA, S.Gz','199406022019021006','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(165,'AKP M. ANDYKA FATRA, S.H., M.H.','80090211','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(166,'PENATA  RADEN MUSTIKAWATI','196904051993032003','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(167,'AKBP WIDI SETIAWAN, S.I.K., M.I.K.','82091230','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(168,'IPTU IRFAN DWI NUGRAHA, S.H.','85050241','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(169,'KOMBES POL UTORO SAPUTRO, S.H., S.S.T.M.K.','68080361','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(170,'AKBP SUBAGIO,S.T., M.M.',' 73060047','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(171,'PENATA I RUK-RUK RUKMINI, S.Pd., M.Pd.','197707172002122003','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(172,'Denny Chahyo wiebowo','197411152009121001','081973001974','polri123','super_admin','Super Admin (All Action)','2026-07-11 07:59:27','2026-07-12 08:19:41',NULL,NULL,NULL,NULL,'','','','bengkeldesign@gmail.com',NULL,NULL,NULL,NULL),(173,'BRIPTU DESI EKA PRATIWI',' 97120747','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(174,'AKP EKO PURWANTO','72100001','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(175,'BRIPDA MOHAMAD HOEDDAUD FADILLAH','02051704','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(176,'KOMBES POL LEONARDUS ERIC BHISMO, S.I.K., S.H., M.H.','70090406','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(177,'AKBP DEWI KANIA SUMPENA, S.E., M.M.   ','75100893','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(178,'KOMBES POL RIVAI SINAMBELA, S.H.','69050330','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(179,'PENATA ARI CAHYADI, S.Kom., S.E.            ','197607161999031001','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(180,'KOMBES POL DENNY YONO PUTRO, S.I.K., M.Si.','72100611','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(181,'PENATA I SRI PURWANTI, S.Pd.','197009041998032003','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(182,'KOMBES POL SUGENG HARIYANTO, S.I.K., M.Hum.','71100497','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(183,'PENDA I SARNO, S.E.','197905272003121004','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(184,'KOMBES POL Dr. ASWIN AZHAR SIREGAR, S.I.K., M.Si., M.Sc.(Eng)., Ph.D.','74120630','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(185,'PENDA I YETI KOMALASARI','197305042006042000','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(186,'KOMBES POL BHIRAWA BRAJA PAKSA, S.I.K.','74080673','','polri123','stakeholder','Super Admin Read Only / Stakeholder','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(187,'BRIPTU FIKRI MUHAMMAD FAUZI','97120756','','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(188,'Wira','081973001974','081973001974','polri123','admin','Admin (Staf)','2026-07-11 07:59:27','2026-07-11 07:59:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(190,'Brigjen Pol. Dr. H. Nurholis','197505121998031002','081199887766','$2a$12$d1goibeAmBPYgmLM0x/K9.AvjuDuSm/Fn0/76aauY.Lhn2v3.QXy.','stakeholder','Super Admin Read Only / Stakeholder','2026-07-12 06:31:46','2026-07-12 06:31:46',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(191,'Bripda Bagus Prasetyo','200108242022031001','081234567890','$2a$12$MC78q9hBoZmrXMEz17ta5.MD6SA9w3KxvK6PV5OXlieMtEA19XXjO','admin','Admin (Staf)','2026-07-12 06:31:46','2026-07-12 06:31:46',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `widyaiswara_content`
+--
+
+DROP TABLE IF EXISTS `widyaiswara_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `widyaiswara_content` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Published','Draft') NOT NULL DEFAULT 'Published',
+  `author` varchar(100) DEFAULT 'Admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image_url` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
 -- Dumping data for table `widyaiswara_content`
 --
-INSERT INTO `widyaiswara_content` (`id`, `title`, `category`, `date`, `status`) VALUES
-('w-1', 'Profil Tenaga Pendidik', 'Profil Widyaiswara', '2026-07-01', 'Published'),
-('w-2', 'Daftar Kompetensi & Bidang Keahlian', 'Bidang Keahlian', '2026-07-02', 'Published'),
-('w-3', 'Publikasi Karya Widyaiswara', 'Publikasi Widyaiswara', '2026-07-02', 'Published'),
-('w-4', 'Materi Kuliah Terbuka Serdik', 'Materi Terbuka', '2026-07-03', 'Published'),
-('w-5', 'Progress Pembimbingan Naskap', 'Pembimbingan Naskap', '2026-07-03', 'Published'),
-('w-6', 'Sistem Inpassing Jabatan Fungsional', 'Inpassing', '2026-07-04', 'Published'),
-('w-7', 'Sertifikasi BNSP / LSP Lemdiklat', 'LSP / BNSP', '2026-07-04', 'Published');
 
-COMMIT;
-SET FOREIGN_KEY_CHECKS = 1;
+LOCK TABLES `widyaiswara_content` WRITE;
+/*!40000 ALTER TABLE `widyaiswara_content` DISABLE KEYS */;
+INSERT INTO `widyaiswara_content` VALUES ('w-1','Profil Tenaga Pendidik','Profil Widyaiswara','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Profil lengkap, daftar biodata, pangkat, dan riwayat jabatan seluruh Widyaiswara serta instruktur pendidik di lingkungan Sespim Lemdiklat Polri yang berdedikasi tinggi.'),('w-2','Daftar Kompetensi & Bidang Keahlian','Bidang Keahlian','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Informasi sebaran bidang keahlian Widyaiswara Sespim yang mencakup hukum kepolisian, manajemen strategis, teknologi siber, sosiologi keamanan, dan taktik operasional.'),('w-3','Publikasi Karya Widyaiswara','Publikasi Widyaiswara','2026-07-02','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Kumpulan artikel ilmiah, buku, jurnal, dan policy brief yang ditulis oleh para Widyaiswara Sespim Lemdiklat Polri sebagai sumbangsih pemikiran bagi Polri.'),('w-4','Materi Kuliah Terbuka Serdik','Materi Terbuka','2026-06-29','Published','Admin','2026-07-08 07:59:27','2026-07-11 18:40:59','','NAMA: RENCANA PEMBELAJARAN WIDYAISWARA.pdf\nDESKRIPSI: RANCANG BANGUN PEMBELAJARAN MATA PELATIHAN dan RENCANA PEMBELAJARAN.\nFILE: 1. RENCANA PEMBELAJARAN WIDYAISWARA.pdf\nURL: /files/widyaiswara/1.%20RENCANA%20PEMBELAJARAN%20WIDYAISWARA.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: PRAKTIK MICROTEACHING\nDESKRIPSI: MATA PELATIHAN PRAKTIK MENGAJAR (MICRO TEACHING).\nFILE: 2. PRAKTIK MICROTEACHING.pdf\nURL: /files/widyaiswara/2.%20PRAKTIK%20MICROTEACHING.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: PANDUAN PENYUSUNAN MEDIA PEMBELAJARAN.pdf\nDESKRIPSI: MATA PELATIHAN PENYUSUNAN MEDIA PEMBELAJARAN.\nFILE: 3. PANDUAN PENYUSUNAN MEDIA PEMBELAJARAN.pdf\nURL: /files/widyaiswara/3.%20PANDUAN%20PENYUSUNAN%20MEDIA%20PEMBELAJARAN.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: PEMBELAJARAN ORANG DEWASA.pdf\nDESKRIPSI: MATA PELATIHAN PEMBELAJARAN ORANG DEWASA.\nFILE: 4. PEMBELAJARAN ORANG DEWASA.pdf\nURL: /files/widyaiswara/4.%20PEMBELAJARAN%20ORANG%20DEWASA.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: METODE PEMBELAJARAN WIDYAISWARA\nDESKRIPSI: METODE PEMBELAJARAN.\nFILE: 5. METODE PEMBELAJARAN WIDYAISWARA.pdf\nURL: /files/widyaiswara/5.%20METODE%20PEMBELAJARAN%20WIDYAISWARA.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: PELATIHAN KOMUNIKASI WIDYAISWARA\nDESKRIPSI: TEKNIK KOMUNIKASI DAN PRESENTASI YANG EFEKTIF.\nFILE: 6. PELATIHAN KOMUNIKASI WIDYAISWARA.pdf\nURL: /files/widyaiswara/6.%20PELATIHAN%20KOMUNIKASI%20WIDYAISWARA.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar\n\nNAMA: KEBIJAKAN PEMBINAAN WIDYAISWARA\nDESKRIPSI: KEBIJAKAN PEMBINAAN WIDYAISWARA DAN ANGKA KREDITNYA.\nFILE: 7. KEBIJAKAN PEMBINAAN WIDYAISWARA.pdf\nURL: /files/widyaiswara/7.%20KEBIJAKAN%20PEMBINAAN%20WIDYAISWARA.pdf\nFORMAT: PDF\nKATEGORI: Pelatihan Dasar'),('w-5','Progress Pembimbingan Naskap','Pembimbingan Naskap','2026-07-03','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Sistem monitoring kemajuan penulisan Naskah Karya Perorangan (Naskap) perwira siswa beserta jadwal konsultasi bersama dosen pembimbing akademis masing-masing.'),('w-6','Sistem Inpassing Jabatan Fungsional','Inpassing','2026-07-01','Published','Admin','2026-07-08 07:59:27','2026-07-11 19:29:53','','MODUL: 1\nJUDUL: Modul 1 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 2\nJUDUL: Modul 2 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 3\nJUDUL: Modul 3 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 4\nJUDUL: Modul 4 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 5\nJUDUL: Modul 5 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 6\nJUDUL: Modul 6 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.\n\nMODUL: 7\nJUDUL: Modul 7 Inpassing Widyaiswara\nDESKRIPSI: Materi pembelajaran mandiri untuk calon Widyaiswara.'),('w-7','Sertifikasi BNSP / LSP Lemdiklat','LSP / BNSP','2026-07-04','Published','Admin','2026-07-08 07:59:27','2026-07-11 16:58:09',NULL,'Informasi sertifikasi kompetensi profesi tenaga pendidik oleh BNSP melalui Lembaga Sertifikasi Profesi (LSP) Lemdiklat Polri guna penjaminan mutu pengajaran.');
+/*!40000 ALTER TABLE `widyaiswara_content` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-07-13 17:52:49

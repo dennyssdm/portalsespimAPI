@@ -1,4 +1,24 @@
 import pool from '../config/db.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const deleteImageFile = (imageUrl) => {
+  if (imageUrl && imageUrl.startsWith('/uploads/')) {
+    const fileName = imageUrl.split('/').pop();
+    const filePath = path.join(__dirname, '../../uploads', fileName);
+    if (fs.existsSync(filePath)) {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (err) {
+        console.error(`Failed to delete file: ${filePath}`, err);
+      }
+    }
+  }
+};
 
 export const tableMap = {
   'beranda-content': 'beranda_content',
@@ -164,7 +184,7 @@ export const createContent = async (req, res, next) => {
 
     const recordStatus = status || 'Published';
     const recordAuthor = author || 'Admin';
-    const recordImageUrl = image_url || null;
+    const recordImageUrl = req.file ? `/uploads/${req.file.filename}` : (image_url || null);
     const recordContent = content || null;
 
     await pool.query(
@@ -205,7 +225,15 @@ export const updateContent = async (req, res, next) => {
     const updatedDate = date !== undefined ? date : existing[0].date;
     const updatedStatus = status !== undefined ? status : existing[0].status;
     const updatedAuthor = author !== undefined ? author : existing[0].author;
-    const updatedImageUrl = image_url !== undefined ? image_url : existing[0].image_url;
+    
+    let updatedImageUrl = existing[0].image_url;
+    if (req.file) {
+      deleteImageFile(existing[0].image_url);
+      updatedImageUrl = `/uploads/${req.file.filename}`;
+    } else if (image_url !== undefined) {
+      updatedImageUrl = image_url;
+    }
+    
     const updatedContent = content !== undefined ? content : existing[0].content;
 
     await pool.query(
@@ -240,6 +268,9 @@ export const deleteContent = async (req, res, next) => {
     }
 
     await pool.query(`DELETE FROM ${req.tableName} WHERE id = ?`, [id]);
+
+    // Clean up uploaded image if it exists
+    deleteImageFile(existing[0].image_url);
 
     res.status(200).json({
       status: 'success',
