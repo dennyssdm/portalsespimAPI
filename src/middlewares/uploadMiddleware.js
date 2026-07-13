@@ -24,13 +24,21 @@ const storage = multer.diskStorage({
   }
 });
 
-// File Filter (Images Only)
+// File Filter (Images, Videos, and Documents)
 const fileFilter = (req, file, cb) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+  const allowedMimeTypes = [
+    // Images
+    'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
+    // Videos
+    'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime',
+    // Documents
+    'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Only JPEG, JPG, PNG, GIF, and WEBP image files are allowed!'), false);
+    cb(new Error('Format file tidak didukung! Hanya diperbolehkan gambar (JPEG, PNG, WEBP), video (MP4, WEBM), atau dokumen (PDF, DOCX, XLSX).'), false);
   }
 };
 
@@ -39,7 +47,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
+    fileSize: 25 * 1024 * 1024 // 25MB limit
   }
 });
 
@@ -52,7 +60,7 @@ export const uploadImage = (req, res, next) => {
       // Multer-specific error (e.g. file size exceeded)
       let message = err.message;
       if (err.code === 'LIMIT_FILE_SIZE') {
-        message = 'File size is too large. Maximum limit is 5MB.';
+        message = 'Ukuran file terlalu besar. Batas maksimal adalah 25MB.';
       }
       return res.status(400).json({
         status: 'error',
