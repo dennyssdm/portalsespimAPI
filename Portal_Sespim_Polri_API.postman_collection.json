@@ -284,13 +284,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/beranda-content?search=&category=&status=Published&page=1&limit=10",
+              "raw": "{{baseUrl}}/api/:contentType?search=&category=&status=Published&page=1&limit=10",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "beranda-content"
+                ":contentType"
               ],
               "query": [
                 {
@@ -320,7 +320,7 @@
                 }
               ]
             },
-            "description": "Publicly fetch content records from specific table. Swap 'beranda-content' for other valid content types."
+            "description": "Publicly fetch content records from specific table. Swap ':contentType' with valid content types (e.g. beranda-content, profil-content)."
           },
           "response": []
         },
@@ -333,14 +333,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/beranda-content/h-1",
+              "raw": "{{baseUrl}}/api/:contentType/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "beranda-content",
-                "h-1"
+                ":contentType",
+                ":id"
               ]
             },
             "description": "Get a single content record by ID."
@@ -383,21 +383,21 @@
                 {
                   "key": "image",
                   "type": "file",
-                  "description": "Image file to upload (optional)"
+                  "description": "Image/Video/Doc file to upload (optional)"
                 }
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/api/beranda-content",
+              "raw": "{{baseUrl}}/api/:contentType",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "beranda-content"
+                ":contentType"
               ]
             },
-            "description": "Create a new content record. Supports image upload using multipart/form-data (optional 'image' field). JSON is also supported."
+            "description": "Create a new content record. Supports file upload using multipart/form-data (optional 'image' field). JSON is also supported."
           },
           "response": []
         },
@@ -422,22 +422,22 @@
                 {
                   "key": "image",
                   "type": "file",
-                  "description": "New image file to upload (optional). Will replace the old image on disk."
+                  "description": "New file to upload (optional). Will replace the old file on disk."
                 }
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/api/beranda-content/h-1",
+              "raw": "{{baseUrl}}/api/:contentType/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "beranda-content",
-                "h-1"
+                ":contentType",
+                ":id"
               ]
             },
-            "description": "Update details of a content record. Supports optional image upload. The old image file will be automatically deleted from disk if a new image is uploaded."
+            "description": "Update details of a content record. Supports optional file upload. The old file will be automatically deleted from disk if a new one is uploaded."
           },
           "response": []
         },
@@ -447,14 +447,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/beranda-content/h-3",
+              "raw": "{{baseUrl}}/api/:contentType/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "beranda-content",
-                "h-3"
+                ":contentType",
+                ":id"
               ]
             },
             "description": "Delete content record by ID from a table. (Restricted to super_admin or admin)."
