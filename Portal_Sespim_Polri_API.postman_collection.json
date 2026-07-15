@@ -460,6 +460,35 @@
             "description": "Delete content record by ID from a table. (Restricted to super_admin or admin)."
           },
           "response": []
+        },
+        {
+          "name": "Upload Image / File Directly",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "Image file to upload directly"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/upload",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload"
+              ]
+            },
+            "description": "Directly upload an image/media file. Returns the uploaded file URL path on success. (Restricted to super_admin or admin)."
+          },
+          "response": []
         }
       ]
     }
