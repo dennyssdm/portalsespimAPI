@@ -28,9 +28,14 @@ export const logActivity = async (req, res, next) => {
       ]
     );
 
+    // Count total unique visitor IPs as the visitor number
+    const [uniqueIpsRow] = await pool.query('SELECT COUNT(DISTINCT ip_address) as count FROM activity_logs');
+    const visitorNumber = uniqueIpsRow[0].count;
+
     res.status(201).json({
       status: 'success',
-      message: 'Activity logged successfully.'
+      message: 'Activity logged successfully.',
+      visitorNumber
     });
   } catch (error) {
     next(error);
