@@ -113,6 +113,20 @@ export const login = async (req, res, next) => {
     // Generate token
     const token = signToken(user.id);
 
+    // Log login activity
+    await pool.query(
+      'INSERT INTO activity_logs (user_id, name, nrp_nip, role, action, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [
+        user.id,
+        user.name,
+        user.nrp_nip,
+        user.role,
+        'Melakukan Login ke Portal',
+        req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || null,
+        req.headers['user-agent'] || null
+      ]
+    ).catch(err => console.error('Failed to log login activity:', err.message));
+
     // Remove password from response
     delete user.password;
 

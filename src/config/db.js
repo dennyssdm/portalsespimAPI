@@ -14,11 +14,28 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// Test connection
+// Test connection and auto-create activity_logs table
 (async () => {
   try {
     const connection = await pool.getConnection();
     console.log('Database connected successfully.');
+    
+    // Auto-create activity_logs table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS \`activity_logs\` (
+        \`id\` INT AUTO_INCREMENT PRIMARY KEY,
+        \`user_id\` INT DEFAULT NULL,
+        \`name\` VARCHAR(150) DEFAULT NULL,
+        \`nrp_nip\` VARCHAR(50) DEFAULT NULL,
+        \`role\` VARCHAR(50) DEFAULT NULL,
+        \`action\` VARCHAR(255) NOT NULL,
+        \`ip_address\` VARCHAR(50) DEFAULT NULL,
+        \`user_agent\` VARCHAR(255) DEFAULT NULL,
+        \`created_at\` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+    console.log('Table "activity_logs" verified/created successfully.');
+    
     connection.release();
   } catch (error) {
     console.error('Database connection failed:', error.message);
