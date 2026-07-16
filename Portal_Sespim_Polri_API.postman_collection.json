@@ -491,6 +491,309 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Activity Logger",
+      "description": "Log website visits and access statistics for analysis by Sespim leadership",
+      "item": [
+        {
+          "name": "Log Activity",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"u-serdik-deny\",\n  \"name\": \"AKBP Deny Haryanto, S.I.K., M.Si.\",\n  \"nrp_nip\": \"84081234\",\n  \"role\": \"serdik\",\n  \"action\": \"Mengakses halaman beranda\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/activity/log",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "activity",
+                "log"
+              ]
+            },
+            "description": "Log single client visit activity log entry to mysql database."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Activity Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/activity/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "activity",
+                "stats"
+              ]
+            },
+            "description": "Get summary count statistics including total page visits and unique visitor index."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Activity Rankings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/activity/rankings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "activity",
+                "rankings"
+              ]
+            },
+            "description": "Retrieve frequency of page visits ranked by active users."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Naskap Mentoring",
+      "description": "Endpoints managed by Next.js app to handle Serdik & Widyaiswara pairing schedules, title selection, and chat comments",
+      "item": [
+        {
+          "name": "Get All Pairings",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Fetch list of all Serdik bimbingan sessions from naskap_db.json"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Pairing (Admin)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"create\",\n  \"name\": \"AKBP John Doe, S.I.K.\",\n  \"rank\": \"Ajun Komisaris Besar Polisi\",\n  \"classGroup\": \"Sespimmen Polri Dikreg Ke-64\",\n  \"email\": \"john.doe@sespim.polri.go.id\",\n  \"phone\": \"6281234567890\",\n  \"meetingUrl\": \"https://meet.google.com/abc-defg-hij\",\n  \"serdikNrpNip\": \"87012345\",\n  \"widyaiswaraName\": \"Irjen Pol. Chuzaini Patoppoi, S.St.Mk., S.H.\",\n  \"widyaiswaraNip\": \"68120455\",\n  \"scheduleText\": \"Setiap Hari Senin, Pukul 10:00 WIB\",\n  \"proposedTitles\": [\n    \"Analisis Penegakan Hukum Siber Guna Menjaga Kamtibmas Rawan Konflik\",\n    \"Optimalisasi Kinerja Satuan Sabhara di Wilayah Hukum Polres Metro\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Register a new Serdik mentoring session, assigned Widyaiswara details, and schedule text"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Pairing (Admin)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"update\",\n  \"id\": \"s-4\",\n  \"name\": \"AKBP Deny Haryanto, S.I.K., M.Si.\",\n  \"serdikNrpNip\": \"84081234\",\n  \"widyaiswaraName\": \"KOMBES POL HENDRA GUNAWAN, S.I.K., M.T.\",\n  \"widyaiswaraNip\": \"80061174\",\n  \"scheduleText\": \"Setiap Hari Kamis, Pukul 20:00 WIB\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Edit Serdik bimbingan record, NIP assignments or scheduling text"
+          },
+          "response": []
+        },
+        {
+          "name": "Select Active Title",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"select-title\",\n  \"id\": \"s-4\",\n  \"title\": \"Kebijakan Pengamanan Perbatasan Berbasis Kemitraan Komunitas Lokal Guna Mencegah Penyelundupan Barang Ilegal\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Approve/Select one of the proposed titles to start writing layout drafts"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Comment / Chat Message",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"add-comment\",\n  \"id\": \"s-4\",\n  \"comment\": \"Izin petunjuk koreksi Bab II Jenderal/Bapak Widyaiswara.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Append a text chat comment from a Serdik or Widyaiswara inside the mentoring session"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve / ACC Chapter Stage",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"approve\",\n  \"id\": \"s-4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Widyaiswara gives ACC/approval to step to the next chapter draft level"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Pairing Session",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"delete\",\n  \"id\": \"s-4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/naskap",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "naskap"
+              ]
+            },
+            "description": "Delete Serdik bimbingan record from DB (Restricted to admin/super_admin)"
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [],
