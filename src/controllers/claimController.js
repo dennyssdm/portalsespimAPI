@@ -33,6 +33,19 @@ export const createClaim = async (req, res, next) => {
       [nrp_nip, name, certificate_code]
     );
 
+    // Push log to SDM and Kasespim via activity_logs
+    await pool.query(
+      'INSERT INTO activity_logs (name, nrp_nip, role, action, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        name,
+        nrp_nip,
+        'widyaiswara',
+        `Menyelesaikan Inpassing Widyaiswara & Klaim Sertifikat (${certificate_code}). Data diserahkan ke bagian SDM dan Kasespim Lemdiklat Polri.`,
+        req.ip || '::1',
+        req.headers['user-agent'] || 'Browser'
+      ]
+    );
+
     const [inserted] = await pool.query('SELECT * FROM inpassing_claims WHERE certificate_code = ?', [certificate_code]);
 
     res.status(201).json({
