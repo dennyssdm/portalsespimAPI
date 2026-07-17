@@ -4,11 +4,15 @@ import {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getPublicWidyaiswaras
 } from '../controllers/userController.js';
 import { protect, restrictTo } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
+
+// Public endpoint to fetch Widyaiswaras details
+router.get('/public-list', getPublicWidyaiswaras);
 
 // All routes require authentication
 router.use(protect);

@@ -199,3 +199,19 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getPublicWidyaiswaras = async (req, res, next) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT name, nrp_nip, role, pangkat, gelar, foto, email, instansi_polri, negara_asal FROM users WHERE role = 'widyaiswara'"
+    );
+    res.status(200).json({
+      status: 'success',
+      data: {
+        widyaiswaras: rows
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
