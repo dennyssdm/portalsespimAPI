@@ -574,14 +574,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/activity/rankings",
+              "raw": "{{baseUrl}}/api/activity/users-ranking",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "activity",
-                "rankings"
+                "users-ranking"
               ]
             },
             "description": "Retrieve frequency of page visits ranked by active users."
