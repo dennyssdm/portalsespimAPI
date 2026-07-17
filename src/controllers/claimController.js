@@ -74,3 +74,42 @@ export const createClaim = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteClaim = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    
+    // First, let's select the claim to get the user's name/NIP for activity log auditing
+    const [claims] = await pool.query('SELECT * FROM inpassing_claims WHERE id = ?', [id]);
+    if (claims.length === 0) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Klaim sertifikat tidak ditemukan.'
+      });
+    }
+    const claim = claims[0];
+
+    // Delete the claim
+    await pool.query('DELETE FROM inpassing_claims WHERE id = ?', [id]);
+
+    // Insert an audit log that this claim was reset/deleted by admin
+    await pool.query(
+      'INSERT INTO activity_logs (name, nrp_nip, role, action, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        claim.name,
+        claim.nrp_nip,
+        'admin',
+        `Menghapus/Reset Sertifikat Inpassing (${claim.certificate_code}) untuk Calon Widyaiswara ${claim.name}.`,
+        req.ip || '::1',
+        req.headers['user-agent'] || 'Browser'
+      ]
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Klaim sertifikat berhasil dihapus dan di-reset.'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
