@@ -94,7 +94,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Bripda Ahmad Subari\",\n  \"nrp_nip\": \"200211122023031001\",\n  \"phone\": \"089876543210\",\n  \"password\": \"polri123\",\n  \"role\": \"admin\",\n  \"role_label\": \"Admin (Staf)\"\n}",
+              "raw": "{\n  \"name\": \"Bripda Ahmad Subari\",\n  \"nrp_nip\": \"200211122023031001\",\n  \"phone\": \"089876543210\",\n  \"password\": \"polri123\",\n  \"role\": \"admin\",\n  \"role_label\": \"Admin (Staf)\",\n  \"instansi_polri\": \"Polda Metro Jaya\",\n  \"negara_asal\": \"Indonesia\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -199,7 +199,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Kompol Eko Prasetyo\",\n  \"nrp_nip\": \"82090456\",\n  \"phone\": \"081223344556\",\n  \"password\": \"polri123\",\n  \"role\": \"widyaiswara\",\n  \"role_label\": \"User Widyaiswara (Tenaga Pendidik)\"\n}",
+              "raw": "{\n  \"name\": \"Kompol Eko Prasetyo\",\n  \"nrp_nip\": \"82090456\",\n  \"phone\": \"081223344556\",\n  \"password\": \"polri123\",\n  \"role\": \"widyaiswara\",\n  \"role_label\": \"User Widyaiswara (Tenaga Pendidik)\",\n  \"instansi_polri\": \"Lemdiklat Polri\",\n  \"negara_asal\": \"Indonesia\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -227,7 +227,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Kompol Eko Prasetyo (Updated)\",\n  \"phone\": \"081223344550\",\n  \"role\": \"widyaiswara\",\n  \"role_label\": \"User Widyaiswara\"\n}",
+              "raw": "{\n  \"name\": \"Kompol Eko Prasetyo (Updated)\",\n  \"phone\": \"081223344550\",\n  \"role\": \"widyaiswara\",\n  \"role_label\": \"User Widyaiswara\",\n  \"instansi_polri\": \"Polda Jawa Barat\",\n  \"negara_asal\": \"Indonesia\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
