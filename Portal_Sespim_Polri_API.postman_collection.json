@@ -794,6 +794,79 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Inpassing Claims",
+      "description": "Endpoints to handle Widyaiswara certificate claims and resetting claims",
+      "item": [
+        {
+          "name": "Get All Claims",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inpassing-claims",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inpassing-claims"
+              ]
+            },
+            "description": "Retrieve list of all claimed certificates"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Claim",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nrp_nip\": \"68120455\",\n  \"name\": \"IRJEN POL CHUZAINI PATOPPOI, S.St.Mk., S.H.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/inpassing-claims",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inpassing-claims"
+              ]
+            },
+            "description": "Claim a certificate for a Widyaiswara candidate who has completed all modules"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete / Reset Claim",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inpassing-claims/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inpassing-claims",
+                "1"
+              ]
+            },
+            "description": "Delete and reset a Widyaiswara certificate claim by ID. (Restricted to super_admin or admin)."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [],
