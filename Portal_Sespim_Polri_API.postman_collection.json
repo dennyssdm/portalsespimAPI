@@ -890,6 +890,43 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Chatbot Agen Wira",
+      "description": "Endpoints to interact with the Virtual Assistant chatbot Agen Wira using Gemini AI or Local Simulation",
+      "item": [
+        {
+          "name": "Send Message",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Apa saja program pendidikan di Sespim?\",\n  \"history\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot"
+              ]
+            },
+            "description": "Send a chat message to Agen Wira. Supports context history for conversational continuity."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [],
