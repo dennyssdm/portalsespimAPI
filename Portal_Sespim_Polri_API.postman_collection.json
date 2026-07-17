@@ -173,6 +173,29 @@
           "response": []
         },
         {
+          "name": "Get Public Widyaiswaras List",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/public-list",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "public-list"
+              ]
+            },
+            "description": "Fetch public-facing details of all Widyaiswaras (name, nrp_nip, role, pangkat, gelar, foto, email, instansi, negara) without authentication."
+          },
+          "response": []
+        },
+        {
           "name": "Get User By ID",
           "request": {
             "method": "GET",
