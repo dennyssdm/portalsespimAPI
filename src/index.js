@@ -23,6 +23,7 @@ import userRoutes from './routes/userRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import claimRoutes from './routes/claimRoutes.js';
 import activityRoutes from './routes/activityRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/inpassing-claims', claimRoutes);
 app.use('/api/activity', activityRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 app.use('/api', contentRoutes);
 
 // Fallback Routes for 404 and Global Errors
