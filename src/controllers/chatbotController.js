@@ -125,19 +125,78 @@ export const requestOperator = async (req, res, next) => {
     // Insert system request log
     await pool.query(
       'INSERT INTO chatbot_logs (session_id, visitor_name, sender, message, status) VALUES (?, ?, ?, ?, ?)',
-      [sessionId, vName, 'user', '[PERMINTAAN BANTUAN OPERATOR HUMAN]', 'unresolved']
+      [sessionId, vName, 'system', '[PERMINTAAN BANTUAN OPERATOR HUMAN]', 'unresolved']
     );
 
     return res.status(200).json({
       status: 'success',
-      message: 'Permintaan bantuan operator telah dikirimkan ke Dashboard Admin.'
+      message: 'Permintaan bantuan operator telah dikirim.'
     });
   } catch (error) {
     next(error);
   }
 };
 
-// 3. Get F.A.Q & Chatbot Analytics for Dashboard
+// 3. Send Message from Operator
+export const sendOperatorMessage = async (req, res, next) => {
+  try {
+    const { sessionId, message, operatorName } = req.body;
+
+    if (!sessionId || !message) {
+      return res.status(400).json({ status: 'error', message: 'Session ID and message are required.' });
+    }
+
+    const opName = operatorName || 'Operator Sespim';
+
+    // Insert operator message log
+    await pool.query(
+      'INSERT INTO chatbot_logs (session_id, visitor_name, sender, message, status, operator_name) VALUES (?, ?, ?, ?, ?, ?)',
+      [sessionId, 'Pengunjung Portal', 'operator', message, 'operator_took_over', opName]
+    );
+
+    // Update all entries for this session to operator_took_over
+    await pool.query(
+      'UPDATE chatbot_logs SET status = "operator_took_over", operator_name = ? WHERE session_id = ?',
+      [opName, sessionId]
+    );
+
+    return res.status(200).json({ status: 'success', message: 'Pesan terkirim.' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+function getSimulatedResponse(message) {
+  const msg = message.toLowerCase();
+
+  if (msg.includes('halo') || msg.includes('hai') || msg.includes('hi') || msg.includes('siang') || msg.includes('pagi')) {
+    return "Siap, nama saya adalah Agen Wira, Virtual Assistant resmi Sespim Lemdiklat Polri. Ada yang bisa saya bantu terkait program pendidikan atau informasi umum Sespim?";
+  }
+
+  if (msg.includes('sespimmen') || msg.includes('sespimti') || msg.includes('sespimma') || msg.includes('program')) {
+    return "Siap, Sespim Lemdiklat Polri menyelenggarakan tiga jenjang pendidikan kepemimpinan:\n1. **Sespimti** (Sekolah Staf dan Pimpinan Tinggi) untuk Perwira Tinggi/Menengah senior.\n2. **Sespimmen** (Sekolah Staf dan Pimpinan Menengah) untuk Perwira Menengah.\n3. **Sespimma** (Sekolah Staf dan Pimpinan Pertama) untuk Perwira Pertama.\n\nMasing-masing program dirancang untuk membentuk kepemimpinan Polri yang presisi dan berintegritas.";
+  }
+
+  if (msg.includes('inpassing') || msg.includes('sertifikat') || msg.includes('klaim')) {
+    return "Siap, untuk menyelesaikan Inpassing Widyaiswara, Anda dapat masuk ke Dashboard Internal Widyaiswara, mengakses menu **Klaim Sertifikat Inpassing**, lalu mengeklik tombol **Klaim Sertifikat**. Setelah berhasil diklaim, status sertifikat Anda akan otomatis terintegrasi ke dalam direktori profil publik.";
+  }
+
+  if (msg.includes('alamat') || msg.includes('lokasi') || msg.includes('di mana') || msg.includes('lembang')) {
+    return "Siap, Kampus Sespim Lemdiklat Polri berlokasi di **Jl. Maribaya No.53, Kayuambon, Kec. Lembang, Kabupaten Bandung Barat, Jawa Barat 40391**.";
+  }
+
+  if (msg.includes('pimpinan') || msg.includes('kasespim') || msg.includes('kepala')) {
+    return "Siap, Kepala Sespim Lemdiklat Polri saat ini adalah **Irjen Pol. Midi Siswoko, S.I.K.** yang memimpin seluruh program pembinaan dan pendidikan kepemimpinan kepolisian.";
+  }
+
+  if (msg.includes('terima kasih') || msg.includes('thanks') || msg.includes('suwun')) {
+    return "Siap, sama-sama. Senang bisa membantu Anda. Jika ada hal lain yang perlu ditanyakan seputar Sespim, saya siap menjawab. Terima kasih!";
+  }
+
+  return "Mohon maaf, saya belum bisa memproses pesan tersebut saat ini. Mohon hubungi operator jika memerlukan bantuan lebih lanjut.";
+}
+
+// 4. Get F.A.Q & Chatbot Analytics for Dashboard
 export const getChatbotStats = async (req, res, next) => {
   try {
     const [totalSessionsRow] = await pool.query('SELECT COUNT(DISTINCT session_id) as count FROM chatbot_logs');
@@ -180,19 +239,19 @@ export const getChatbotStats = async (req, res, next) => {
   }
 };
 
-// 4. Get List of Active Visitor Sessions for Live Operator Dashboard
+// 5. Get List of Active Visitor Sessions for Live Operator Dashboard
 export const getActiveSessions = async (req, res, next) => {
   try {
     const [sessions] = await pool.query(
       `SELECT 
         session_id,
-        visitor_name,
-        visitor_ip,
-        status,
+        MAX(visitor_name) as visitor_name,
+        MAX(visitor_ip) as visitor_ip,
+        (SELECT status FROM chatbot_logs t2 WHERE t2.session_id = t1.session_id ORDER BY t2.created_at DESC LIMIT 1) as status,
         MAX(created_at) as last_activity,
         COUNT(*) as total_messages
-       FROM chatbot_logs
-       GROUP BY session_id, visitor_name, visitor_ip, status
+       FROM chatbot_logs t1
+       GROUP BY session_id
        ORDER BY last_activity DESC
        LIMIT 30`
     );
@@ -208,7 +267,7 @@ export const getActiveSessions = async (req, res, next) => {
   }
 };
 
-// 5. Get Messages for a specific Session ID
+// 6. Get Messages for a specific Session ID
 export const getSessionMessages = async (req, res, next) => {
   try {
     const { sessionId } = req.params;
@@ -229,69 +288,6 @@ export const getSessionMessages = async (req, res, next) => {
   }
 };
 
-// 6. Operator Send Live Reply to Visitor
-export const sendOperatorReply = async (req, res, next) => {
-  try {
-    const { sessionId, operatorName, message } = req.body;
+// Alias to match route definition
+export const sendOperatorReply = sendOperatorMessage;
 
-    if (!sessionId || !message) {
-      return res.status(400).json({ status: 'error', message: 'Session ID and message are required.' });
-    }
-
-    const opName = operatorName || 'Operator Sespim';
-
-    // Insert operator message log
-    await pool.query(
-      'INSERT INTO chatbot_logs (session_id, visitor_name, sender, message, status, operator_name) VALUES (?, ?, ?, ?, ?, ?)',
-      [sessionId, 'Pengunjung Portal', 'operator', message, 'operator_took_over', opName]
-    );
-
-    // Update all entries for this session to operator_took_over
-    await pool.query(
-      'UPDATE chatbot_logs SET status = "operator_took_over", operator_name = ? WHERE session_id = ?',
-      [opName, sessionId]
-    );
-
-    return res.status(200).json({
-      status: 'success',
-      message: 'Pesan operator berhasil dikirimkan ke sesi pengunjung.'
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-function getSimulatedResponse(message) {
-  const msg = message.toLowerCase();
-
-  if (msg.includes('siapa kamu') || msg.includes('nama kamu') || msg.includes('wira')) {
-    return "Siap, nama saya adalah Agen Wira, Virtual Assistant resmi Sespim Lemdiklat Polri. Ada yang bisa saya bantu terkait program pendidikan atau informasi umum Sespim?";
-  }
-
-  if (msg.includes('sespimmen') || msg.includes('sespimti') || msg.includes('sespimma') || msg.includes('program')) {
-    return "Siap, Sespim Lemdiklat Polri menyelenggarakan tiga jenjang pendidikan kepemimpinan:\n1. **Sespimti** (Sekolah Staf dan Pimpinan Tinggi) untuk Perwira Tinggi/Menengah senior.\n2. **Sespimmen** (Sekolah Staf dan Pimpinan Menengah) untuk Perwira Menengah.\n3. **Sespimma** (Sekolah Staf dan Pimpinan Pertama) untuk Perwira Pertama.\n\nMasing-masing program dirancang untuk membentuk kepemimpinan Polri yang presisi dan berintegritas.";
-  }
-
-  if (msg.includes('inpassing') || msg.includes('sertifikat') || msg.includes('klaim')) {
-    return "Siap, untuk menyelesaikan Inpassing Widyaiswara, Anda dapat masuk ke Dashboard Internal Widyaiswara, mengakses menu **Klaim Sertifikat Inpassing**, lalu mengeklik tombol **Klaim Sertifikat**. Setelah berhasil diklaim, status sertifikat Anda akan otomatis terintegrasi ke dalam direktori profil publik.";
-  }
-
-  if (msg.includes('alamat') || msg.includes('lokasi') || msg.includes('di mana') || msg.includes('lembang')) {
-    return "Siap, Kampus Sespim Lemdiklat Polri berlokasi di **Jl. Maribaya No.53, Kayuambon, Kec. Lembang, Kabupaten Bandung Barat, Jawa Barat 40391**.";
-  }
-
-  if (msg.includes('pimpinan') || msg.includes('kasespim') || msg.includes('kepala')) {
-    return "Siap, Kepala Sespim Lemdiklat Polri saat ini adalah **Irjen Pol. Midi Siswoko, S.I.K.** yang memimpin seluruh program pembinaan dan pendidikan kepemimpinan kepolisian.";
-  }
-
-  if (msg.includes('terima kasih') || msg.includes('thanks') || msg.includes('suwun')) {
-    return "Siap, sama-sama. Senang bisa membantu Anda. Jika ada hal lain yang perlu ditanyakan seputar Sespim, saya siap menjawab. Terima kasih!";
-  }
-
-  // Default response
-  return `Siap, terima kasih atas pertanyaannya: "${message}". 
-
-Saat ini saya berjalan dalam *mode simulasi pengujian* karena kunci akses API belum diaktifkan di server. 
-
-Jika Anda memerlukan bantuan lebih spesifik yang tidak dapat dijawab oleh kecerdasan buatan, silakan tekan tombol **"Hubungkan ke Operator Sespim"** untuk disambungkan langsung dengan petugas piket Sespim.`;
-}
