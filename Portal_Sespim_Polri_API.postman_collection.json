@@ -896,7 +896,7 @@
       "description": "Endpoints to interact with the Virtual Assistant chatbot Agen Wira using Gemini AI or Local Simulation",
       "item": [
         {
-          "name": "Send Message",
+          "name": "Send Message (Express Backend)",
           "request": {
             "auth": {
               "type": "noauth"
@@ -905,7 +905,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"message\": \"Apa saja program pendidikan di Sespim?\",\n  \"history\": []\n}",
+              "raw": "{\n  \"message\": \"Apa saja program pendidikan di Sespim?\",\n  \"history\": [\n    {\n      \"role\": \"user\",\n      \"parts\": [{ \"text\": \"Halo Agen Wira\" }]\n    },\n    {\n      \"role\": \"model\",\n      \"parts\": [{ \"text\": \"Siap! Selamat datang di Portal Resmi Sespim Lemdiklat Polri. Ada yang bisa saya bantu?\" }]\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -922,7 +922,88 @@
                 "chatbot"
               ]
             },
-            "description": "Send a chat message to Agen Wira. Supports context history for conversational continuity."
+            "description": "Send a chat message to Agen Wira on Express Backend. Supports context history for conversational continuity."
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message (Next.js Serverless Route)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Di mana lokasi kampus Sespim Lemdiklat Polri?\",\n  \"history\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{frontendUrl}}/api/chatbot",
+              "host": [
+                "{{frontendUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot"
+              ]
+            },
+            "description": "Send a chat message to Agen Wira on Next.js Serverless route (works directly on Vercel deployment)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "System & Utility Services",
+      "description": "System utility endpoints for client IP and news monitoring RSS feeds",
+      "item": [
+        {
+          "name": "Fetch News Monitoring Feed",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{frontendUrl}}/api/news-monitoring",
+              "host": [
+                "{{frontendUrl}}"
+              ],
+              "path": [
+                "api",
+                "news-monitoring"
+              ]
+            },
+            "description": "Fetch real-time Google News RSS feed items related to Sespim Lemdiklat Polri."
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Client IP",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{frontendUrl}}/api/client-ip",
+              "host": [
+                "{{frontendUrl}}"
+              ],
+              "path": [
+                "api",
+                "client-ip"
+              ]
+            },
+            "description": "Fetch the client visitor IP address."
           },
           "response": []
         }
@@ -934,6 +1015,11 @@
     {
       "key": "baseUrl",
       "value": "http://localhost:5001",
+      "type": "string"
+    },
+    {
+      "key": "frontendUrl",
+      "value": "http://localhost:3000",
       "type": "string"
     },
     {
