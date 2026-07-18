@@ -156,7 +156,7 @@ export const getContentById = async (req, res, next) => {
 
 export const createContent = async (req, res, next) => {
   try {
-    const { id, title, category, date, status, author, image_url, content, school_field, cohort, year } = req.body;
+    const { id, title, category, date, status, author, image_url, content } = req.body;
 
     if (!title || !category || !date) {
       return res.status(400).json({
@@ -187,17 +187,10 @@ export const createContent = async (req, res, next) => {
     const recordImageUrl = req.file ? `/uploads/${req.file.filename}` : (image_url || null);
     const recordContent = content || null;
 
-    if (req.tableName === 'publikasi_content') {
-      await pool.query(
-        `INSERT INTO ${req.tableName} (id, title, category, date, status, author, image_url, content, school_field, cohort, year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [finalId, title, category, date, recordStatus, recordAuthor, recordImageUrl, recordContent, school_field || null, cohort || null, year ? parseInt(year) : null]
-      );
-    } else {
-      await pool.query(
-        `INSERT INTO ${req.tableName} (id, title, category, date, status, author, image_url, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [finalId, title, category, date, recordStatus, recordAuthor, recordImageUrl, recordContent]
-      );
-    }
+    await pool.query(
+      `INSERT INTO ${req.tableName} (id, title, category, date, status, author, image_url, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [finalId, title, category, date, recordStatus, recordAuthor, recordImageUrl, recordContent]
+    );
 
     // Retrieve inserted record
     const [inserted] = await pool.query(`SELECT * FROM ${req.tableName} WHERE id = ?`, [finalId]);
@@ -216,7 +209,7 @@ export const createContent = async (req, res, next) => {
 export const updateContent = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, category, date, status, author, image_url, content, school_field, cohort, year } = req.body;
+    const { title, category, date, status, author, image_url, content } = req.body;
 
     // Check if record exists
     const [existing] = await pool.query(`SELECT * FROM ${req.tableName} WHERE id = ?`, [id]);
@@ -243,21 +236,10 @@ export const updateContent = async (req, res, next) => {
     
     const updatedContent = content !== undefined ? content : existing[0].content;
 
-    if (req.tableName === 'publikasi_content') {
-      const updatedSchoolField = school_field !== undefined ? school_field : existing[0].school_field;
-      const updatedCohort = cohort !== undefined ? cohort : existing[0].cohort;
-      const updatedYear = year !== undefined ? (year ? parseInt(year) : null) : existing[0].year;
-
-      await pool.query(
-        `UPDATE ${req.tableName} SET title = ?, category = ?, date = ?, status = ?, author = ?, image_url = ?, content = ?, school_field = ?, cohort = ?, year = ? WHERE id = ?`,
-        [updatedTitle, updatedCategory, updatedDate, updatedStatus, updatedAuthor, updatedImageUrl, updatedContent, updatedSchoolField, updatedCohort, updatedYear, id]
-      );
-    } else {
-      await pool.query(
-        `UPDATE ${req.tableName} SET title = ?, category = ?, date = ?, status = ?, author = ?, image_url = ?, content = ? WHERE id = ?`,
-        [updatedTitle, updatedCategory, updatedDate, updatedStatus, updatedAuthor, updatedImageUrl, updatedContent, id]
-      );
-    }
+    await pool.query(
+      `UPDATE ${req.tableName} SET title = ?, category = ?, date = ?, status = ?, author = ?, image_url = ?, content = ? WHERE id = ?`,
+      [updatedTitle, updatedCategory, updatedDate, updatedStatus, updatedAuthor, updatedImageUrl, updatedContent, id]
+    );
 
     // Retrieve updated record
     const [updated] = await pool.query(`SELECT * FROM ${req.tableName} WHERE id = ?`, [id]);
