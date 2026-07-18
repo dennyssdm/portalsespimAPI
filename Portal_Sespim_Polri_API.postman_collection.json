@@ -922,7 +922,7 @@
                 "chatbot"
               ]
             },
-            "description": "Send a chat message to Agen Wira on Express Backend. Supports context history for conversational continuity."
+            "description": "Send a chat message to Agen Wira on Express Backend. Supports context history for continuity."
           },
           "response": []
         },
@@ -954,6 +954,161 @@
               ]
             },
             "description": "Send a chat message to Agen Wira on Next.js Serverless route (works directly on Vercel deployment)."
+          },
+          "response": []
+        },
+        {
+          "name": "Request Operator Handover",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"sess_test_123\",\n  \"visitorName\": \"Pengunjung Uji Coba\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot/request-operator",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot",
+                "request-operator"
+              ]
+            },
+            "description": "Send request for live human operator help."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Session Chat Messages",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot/messages/sess_test_123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot",
+                "messages",
+                "sess_test_123"
+              ]
+            },
+            "description": "Fetch chat transcript/logs for a specific session ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Chatbot Analytics Stats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot",
+                "stats"
+              ]
+            },
+            "description": "Fetch chatbot usage metrics, unresolved question logs, and F.A.Q keywords (Requires admin/superadmin login)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Chat Sessions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot",
+                "sessions"
+              ]
+            },
+            "description": "Fetch active visitor chat sessions for live operator takeover console (Requires admin/superadmin login)."
+          },
+          "response": []
+        },
+        {
+          "name": "Send Operator manual Reply",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"sess_test_123\",\n  \"operatorName\": \"Bripda Dian - Piket Sespim\",\n  \"message\": \"Siap! Petugas piket Sespim telah bergabung. Ada yang bisa kami bantu?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chatbot/operator-reply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "chatbot",
+                "operator-reply"
+              ]
+            },
+            "description": "Send human operator reply to user session (Requires admin/superadmin login)."
           },
           "response": []
         }
