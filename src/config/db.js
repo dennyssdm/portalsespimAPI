@@ -3,12 +3,39 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const appEnv = (process.env.APP_ENV || process.env.NODE_ENV || 'local').toLowerCase();
+const isProd = appEnv === 'production' || appEnv === 'prod';
+
+const host = isProd 
+  ? (process.env.DB_HOST_PROD || process.env.DB_HOST || 'localhost') 
+  : (process.env.DB_HOST_LOCAL || process.env.DB_HOST || '127.0.0.1');
+
+const port = parseInt(
+  isProd 
+    ? (process.env.DB_PORT_PROD || process.env.DB_PORT || '3306') 
+    : (process.env.DB_PORT_LOCAL || process.env.DB_PORT || '3306')
+);
+
+const user = isProd 
+  ? (process.env.DB_USER_PROD || process.env.DB_USER || 'sespimpolrilem25_sespimpolrilem2') 
+  : (process.env.DB_USER_LOCAL || process.env.DB_USER || 'root');
+
+const password = isProd 
+  ? (process.env.DB_PASS_PROD || process.env.DB_PASSWORD || '') 
+  : (process.env.DB_PASS_LOCAL !== undefined ? process.env.DB_PASS_LOCAL : (process.env.DB_PASSWORD || ''));
+
+const database = isProd 
+  ? (process.env.DB_NAME_PROD || process.env.DB_NAME || 'sespimpolrilem25_portalsespim') 
+  : (process.env.DB_NAME_LOCAL || process.env.DB_NAME || 'portalsespim');
+
+console.log(`[Database] Environment: ${appEnv.toUpperCase()} | Host: ${host}:${port} | Database: ${database}`);
+
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: parseInt(process.env.DB_PORT || '3306'),
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'portalsespim',
+  host,
+  port,
+  user,
+  password,
+  database,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

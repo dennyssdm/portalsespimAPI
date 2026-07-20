@@ -30,7 +30,8 @@ export const tableMap = {
   'berita-informasi-content': 'berita_informasi_content',
   'galeri-unduhan-content': 'galeri_unduhan_content',
   'kontak-content': 'kontak_content',
-  'sarana-prasarana-content': 'sarana_prasarana_content'
+  'sarana-prasarana-content': 'sarana_prasarana_content',
+  'serdik-content': 'serdik_content'
 };
 
 const prefixMap = {
@@ -43,7 +44,8 @@ const prefixMap = {
   'berita_informasi_content': 'n',
   'galeri_unduhan_content': 'g',
   'kontak_content': 'con',
-  'sarana_prasarana_content': 's'
+  'sarana_prasarana_content': 's',
+  'serdik_content': 'ser'
 };
 
 // Middleware to inject and validate table name

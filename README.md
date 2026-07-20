@@ -85,6 +85,7 @@ Available content endpoints (substitute `:contentType` parameter):
 - `galeri-unduhan-content`
 - `kontak-content`
 - `sarana-prasarana-content`
+- `serdik-content`
 
 | Method | Endpoint | Auth | Required Role | Description |
 | :--- | :--- | :--- | :--- | :--- |

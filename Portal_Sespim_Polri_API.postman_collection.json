@@ -296,7 +296,7 @@
     },
     {
       "name": "Content CRUD (Dynamic)",
-      "description": "Folder containing dynamic content endpoints. Use parameter `:contentType` in URLs. Valid types:\n- beranda-content\n- profil-content\n- program-pendidikan-content\n- kelembagaan-internal-content\n- widyaiswara-content\n- publikasi-content\n- berita-informasi-content\n- galeri-unduhan-content\n- kontak-content\n- sarana-prasarana-content",
+      "description": "Folder containing dynamic content endpoints. Use parameter `:contentType` in URLs. Valid types:\n- beranda-content\n- profil-content\n- program-pendidikan-content\n- kelembagaan-internal-content\n- widyaiswara-content\n- publikasi-content\n- berita-informasi-content\n- galeri-unduhan-content\n- kontak-content\n- sarana-prasarana-content\n- serdik-content",
       "item": [
         {
           "name": "List Content Records (Public)",
