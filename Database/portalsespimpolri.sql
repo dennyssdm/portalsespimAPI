@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for osx10.10 (x86_64)
 --
--- Host: 127.0.0.1    Database: portalsespim
+-- Host: localhost    Database: portalsespim
 -- ------------------------------------------------------
 -- Server version	10.4.28-MariaDB
 
@@ -480,4 +480,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-07-23  2:13:02
+-- Dump completed on 2026-07-23  2:13:27
